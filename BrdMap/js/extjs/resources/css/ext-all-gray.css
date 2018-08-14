@@ -1,0 +1,13 @@
+@import '../ext-theme-gray/ext-theme-gray-all.css';
+.grid-desc-panel{
+	background-color:#E9EAEC;
+	border:0px;
+	border-bottom:1px solid #D0D0D0;
+}
+
+/** the default cell selected bgcolor **/
+.brd-cell-inner-selected{
+	color:#000000 !important;
+	background-color:#D3D3D3 !important;
+}
+.x-tool-toggle2 > img{background-position:0 -75px;!important}

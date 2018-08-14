@@ -1,0 +1,12 @@
+@import '../ext-theme-neptune/ext-theme-neptune-all.css';
+.grid-desc-panel{
+	background-color:#D7E4F2;
+	border:0px;
+	border-bottom:1px solid #99BCE8;
+}
+
+/** the default cell selected bgcolor **/
+.brd-cell-inner-selected{
+	color:#000000 !important;
+	background-color:#B8CFEE !important;
+}

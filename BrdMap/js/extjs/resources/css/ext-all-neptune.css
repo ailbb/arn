@@ -1,0 +1,22 @@
+@import '../ext-theme-neptune-red/ext-theme-neptune-all-debug.css';
+.grid-desc-panel{
+	background-color:#E9EAEC;
+	border:0px;
+	border-bottom:1px solid #D0D0D0;
+}
+
+/** the default cell selected bgcolor **/
+.brd-cell-inner-selected{
+	color:#000000 !important;
+	background-color:#D3D3D3 !important;
+}
+.x-panel-header-text-container-default {
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  font-family: '微软雅黑','Microsoft Yahei',arial, helvetica, verdana, sans-serif;
+  line-height: 15px;
+  padding: 1px 0 0;
+  text-transform: none;
+}
+

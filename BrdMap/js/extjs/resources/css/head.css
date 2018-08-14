@@ -1,0 +1,214 @@
+.operatenew {
+	background-image: url(../images/icon/News-Add.gif) !important;
+}
+
+.operatedelete {
+	background-image: url(../images/icon/News-Del.gif) !important;
+}
+
+.operateedit {
+	background-image: url(../images/icon/News-Edit.gif) !important;
+}
+
+.operatequery {
+	background-image: url(../images/icon/Search.gif) !important;
+}
+
+.operatesave {
+	background-image: url(../images/icon/Save.gif) !important;
+}
+
+.operatesearch {
+	background-image: url(../images/icon/find.png) !important;
+}
+
+.selectedList {
+	background-image: url(../images/icon/selected.png) !important;
+}
+
+.operateleft {
+	background-image: url(../images/icon/toleft.png) !important;
+}
+
+.operateright {
+	background-image: url(../images/icon/toright.png) !important;
+}
+
+.operatecancel {
+	background-image: url(../images/icon/News-Cancel.gif) !important;
+}
+
+.operateview {
+	background-image: url(../images/icon/view.gif) !important;
+}
+
+.operaterefresh {
+	background-image: url(../images/icon/page_refresh.png) !important;
+}
+
+.operatereturn {
+	background-image: url(../images/icon/return.gif) !important;
+}
+
+.operatesaveui {
+	background-image: url(../images/icon/script_save.png) !important;
+}
+
+.operatedel {
+	background-image: url(../images/icon/delete.png) !important;
+}
+
+.operateque {
+	background-image: url(../images/icon/zoom.png) !important;
+}
+
+.operateup {
+	background-image: url(../images/icon/up.png) !important;
+}
+
+.operatedown {
+	background-image: url(../images/icon/down.png) !important;
+}
+
+.operatemove {
+	background-image: url(../images/icon/move.png) !important;
+}
+
+.operatesort {
+	background-image: url(../images/icon/sort.png) !important;
+}
+
+.operateviews {
+	background-image: url(../images/icon/views.gif) !important;
+}
+
+.operatecontrol {
+	background-image: url(../images/icon/control.png) !important;
+}
+
+.charbar {
+	background-image: url(../images/icon/chart_bar.png) !important;
+}
+.colcontrol {
+	background-image: url(../images/icon/col_control.png) !important;
+}
+.logout {
+	background-image: url(../images/icon/logout.png) !important;
+}
+
+.about {
+	background-image: url(../images/icon/about.png) !important;
+}
+
+.download {
+	background-image: url(../images/icon/download.png) !important;
+}
+
+.theme {
+	background-image: url(../images/icon/color_swatch.png) !important;
+}
+
+.exportopt {
+	background-image: url(../images/icon/basket_put.png) !important;
+}
+
+.importopt {
+	background-image: url(../images/icon/basket_remove.png) !important;
+}
+
+.chartCurve {
+	background-image: url(../images/icon/chart_curve.png) !important;
+}
+
+.treeleaf {
+	background-image: url(../images/icon/table_link.png) !important;
+}
+
+.useradd {
+	background-image: url(../images/icon/user_add.png) !important;
+}
+
+.useredit {
+	background-image: url(../images/icon/user_edit.png) !important;
+}
+
+.userdelete {
+	background-image: url(../images/icon/user_delete.png) !important;
+}
+
+.userico {
+	background-image: url(../images/icon/user.png) !important;
+}
+
+.folder {
+	background-image: url(../images/icon/folder.gif) !important;
+}
+
+.newfolder {
+	background-image: url(../images/icon/folder_new.gif) !important;
+}
+
+.newfile {
+	background-image: url(../images/icon/file_new.gif) !important;
+}
+
+.editfolder {
+	background-image: url(../images/icon/folder_edit.gif) !important;
+}
+
+.computer {
+	background-image: url(../images/icon/computer.png) !important;
+}
+
+.piechart {
+	background-image: url(../images/icon/piechart.png) !important;
+}
+
+.accept {
+	background-image: url(../images/icon/accept.png) !important;
+}
+
+.cancel {
+	background-image: url(../images/icon/cancel.png) !important;
+}
+
+.auditrequest {
+	background-image: url(../images/icon/application_get.png) !important;
+}
+
+.upload {
+	background-image: url(../images/icon/upload_.png) !important;
+}
+
+.xls {
+	background-image: url(../images/icon/xls.gif) !important;
+}
+
+.expandAll {
+	background-image: url(../images/icon/expand-all.gif) !important;
+}
+
+.printer {
+	background-image: url(../images/icon/printer.png) !important;
+}
+
+.collapseAll {
+	background-image: url(../images/icon/collapse-all.gif) !important;
+}
+
+.eventTreeNode {
+	background-image: url(../images/icon/treenode.png) !important;
+}
+
+.insertAdd {
+	background-image: url(../images/icon/add.png) !important;
+}
+
+.x-form-point-trigger {
+	background-image:
+		url(../ext-theme-classic/images/form/trigger-point.gif)
+}
+
+.default-hidden {
+	display: none;
+}

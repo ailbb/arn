@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lib normal demo</title>
+
+    <script>
+        /*注释：*/
+        /**
+         * Load the library located at the same path with this file
+         *
+         * Will automatically load ext-all-debug.js if any of these conditions is true:
+         *  - Current hostname is localhost
+         *  - Current hostname is an IP v4 address
+         *  - Current protocol is "file:"
+         *  - Query string has `debug` parameter passed (http://foo/test.html?debug)
+         *
+         * If none of the above is true or the `nodebug` query string parameter is present (http://foo/test.html?nodebug),
+         * ext-all.js will be loaded.
+         */
+    </script>
+
+    <!--声明-->
+    <!--ExtJs适应mobile声明-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--END-->
+
+    <!--jQuery-JavaScript辅助库-->
+    <!--<script src="JQuery/jquery-2.1.1/jquery.js"></script>-->
+    <script src="JQuery/jquery-2.1.1/jquery.min.js"></script>
+    <!--END-->
+
+    <!--Bootstrap-UI框架-->
+    <!--<link href="Bootstrap/bootstrap-3.3.5/dist/css/bootstrap.css" rel="stylesheet">-->
+    <!--<script src="Bootstrap/bootstrap-3.3.5/dist/js/bootstrap.js"></script>-->
+    <link href="Bootstrap/bootstrap-3.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="Bootstrap/bootstrap-3.3.5/dist/js/bootstrap.min.js"></script>
+    <!--END-->
+
+    <!--ExtJs-富客户端框架-->
+    <!--<link rel="stylesheet" href="Sencha/ext-6.0.0/build/classic/theme-crisp/resources/theme-triton-all-debug.css"/>-->
+    <link rel="stylesheet" href="Sencha/ext-6.0.0/build/classic/theme-triton/resources/theme-triton-all.css"/>
+    <script src="Sencha/ext-6.0.0/ext-bootstrap.js"></script>
+    <!--END-->
+
+    <!--d3数据可视化-框架-->
+    <!--<script src="D3/d3-3.5.14/d3.js"></script>-->
+    <script src="D3/d3-3.5.14/d3.min.js"></script>
+    <!--END-->
+
+    <!--Echarts-框架-->
+    <!--<script src="Echarts/echarts-3.1.2/echarts.js"></script>-->
+    <script src="Echarts/echarts-3.1.2/echarts.min.js"></script>
+    <!--END-->
+
+    <!--Echarts-框架-->
+    <!--<script src="Highcharts/highcharts-4.1.5/highcharts.src.js"></script>-->
+    <script src="Highcharts/highcharts-4.1.5/highcharts.js"></script>
+    <!--END-->
+
+    <script>
+        Ext.onReady(function(){
+            Ext.Msg.alert('提示','Ext加载完成！');
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

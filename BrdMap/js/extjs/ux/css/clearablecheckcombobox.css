@@ -1,0 +1,14 @@
+.x-combo-checker {
+	margin-left: 1px;
+	background-color: transparent;
+	background-image: url("../images/unchecked.gif");
+	background-position: -1px -1px;
+	background-repeat: no-repeat;
+	height: 14px;
+	width: 14px;
+	display: inline-block;
+}
+
+.x-boundlist-selected .x-combo-checker {
+	background-image: url("../images/checked.gif");
+}
