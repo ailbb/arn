@@ -3721,7 +3721,7 @@ function dataAttr( elem, key, data ) {
 					data === "null" ? null :
 					// Only convert to a number if it doesn't change the string
 					+data + "" === data ? +data :
-					rbrace.test( data ) ? jQuery.parseJSON( data ) :
+					rbrace.test( data ) ? jQuery.toJson( data ) :
 					data;
 			} catch( e ) {}
 
@@ -7499,7 +7499,7 @@ var rquery = (/\?/);
 
 // Support: Android 2.3
 // Workaround failure to string-cast null input
-jQuery.parseJSON = function( data ) {
+jQuery.toJson = function( data ) {
 	return JSON.parse( data + "" );
 };
 
@@ -7863,7 +7863,7 @@ jQuery.extend({
 			"text html": true,
 
 			// Evaluate text as a json expression
-			"text json": jQuery.parseJSON,
+			"text json": jQuery.toJson,
 
 			// Parse text as xml
 			"text xml": jQuery.parseXML
