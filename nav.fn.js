@@ -32,34 +32,45 @@ define(['jQuery'], function ($) {
             params = undefined;
 
             // Otherwise, build a param string
-        } else if ( params && typeof params === "object" ) {
-            type = "POST";
+        }
+
+        var dataType="html";
+
+        if(~url.indexOf("?")) {
+            dataType = url.substring(0, url.indexOf("?"));
+            dataType = dataType.substring(dataType.lastIndexOf(".") + 1, dataType.length);
+        } else {
+            dataType = url.substring(url.lastIndexOf(".") + 1, url.length);
         }
 
         // If we have elements to modify, make the request
         if ( self.length > 0 ) {
-            $.ajax({
-                url: url,
-
-                // if "type" variable is undefined, then "GET" method will be used
-                type: type,
-                dataType: "html",
-                data: params
-            }).done(function( responseText ) {
-
-                // Save response for use in complete callback
-                response = arguments;
-                self.html( selector ?
-
-                    // If a selector was specified, locate the right elements in a dummy div
-                    // Exclude scripts to avoid IE 'Permission Denied' errors
-                    jQuery("<div>").append( jQuery.parseHTML( responseText ) ).find( selector ) :
-
-                    // Otherwise use the full result
-                    $.initHtml().purifyHtml(responseText));
-            }).complete( callback && function( jqXHR, status ) {
+            if( dataType.toLowerCase() == "js" ) {
+                require([url], function (js) {
+                    if(typeof js == 'function') js(params);
+                    if(typeof js == 'object' && js.init) js.init(params);
+                });
+            } else {
+                $.ajax({
+                    url: url,
+                    // if "type" variable is undefined, then "GET" method will be used
+                    type: type,
+                    dataType: "html",
+                    data: params
+                }).done(function( responseText ) {
+                    // Save response for use in complete callback
+                    response = arguments;
+                    self.html( selector ?
+                        // If a selector was specified, locate the right elements in a dummy div
+                        // Exclude scripts to avoid IE 'Permission Denied' errors
+                        jQuery("<div>").append( jQuery.parseHTML( responseText ) ).find( selector ) :
+                        // Otherwise use the full result
+                        $.initHtml().purifyHtml(responseText)
+                    );
+                }).complete( callback && function( jqXHR, status ) {
                     self.each( callback, response || [ jqXHR.responseText, status, jqXHR ] );
                 });
+            }
         }
 
         return this;
@@ -150,14 +161,9 @@ define(['jQuery'], function ($) {
             for (var o in o2) o1[o] = o2[o];
             return o1;
         },
-      //增加全局调用后台日志方法
-        addLogs:function(moduleId,operation,params){
-    		$.post(AppBase+"/ShareControl/addlog",{
-    			moduleId:moduleId,
-    			operation:operation,
-    			params:params
-    		},function(){});
-    	}
+        parse: function (str) {
+            return typeof str == 'string' ? JSON.parse(str) : str;
+        }
     });
 
 });
