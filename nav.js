@@ -52,6 +52,7 @@
             versions: {
                 requireCss: config.version.requireCss || '0.1.8',
                 jQuery: config.version.jQuery || '2.1.1',
+                vue: config.version.vue || '2.6.10',
                 bootstrap: config.version.bootstrap || '3.3.5',
                 ext: config.version.ext || '6.0.0',
                 d3: config.version.d3 || '3.5.14',
@@ -176,6 +177,7 @@
         paths: {
             moment: 'Moment/moment' + me.getVersion('moment', '-') + '/moment' + (me.isDebug ? '' : '.min'),
             jQuery: 'JQuery/jquery' + me.getVersion('jQuery', '-') + '/jquery' + (me.isDebug ? '' : '.min'),
+            vue: 'Vue/vue' + me.getVersion('vue', '-') + '/vue' + (me.isDebug ? '' : '.min'),
             jQuerySlide: 'JQuery/jquery' + me.getVersion('jQuery', '-') + '/jquery.SuperSlide' + (me.isDebug ? '' : '.min'),
             bootstrap: 'Bootstrap/bootstrap' + me.getVersion('bootstrap', '-') + '/dist/js/bootstrap' + (me.isDebug ? '' : '.min'),
             ext: 'Sencha/ext' + me.getVersion('ext', '-') + '/build/ext-all' + (me.isDebug ? '-debug' : ''),
@@ -225,13 +227,14 @@
     /**
      * 加载动态库
      */
-    require(config.reqLibraries || ['jQuery', 'ext', 'd3', 'eCharts', 'highCharts', 'moment'], function ($, Ext, d3, echarts, Highcharts, moment) {
+    require(config.reqLibraries || ['jQuery', 'ext', 'd3', 'eCharts', 'highCharts', 'moment', 'vue'], function ($, Ext, d3, echarts, Highcharts, moment, vue) {
         me.library.jQuery = me.library.$ = $;
         me.library.Ext = Ext;
         me.library.d3 = d3;
         me.library.echarts = echarts;
         me.library.Highcharts = Highcharts;
         me.library.moment = moment;
+        me.library.vue = vue;
 
         if (config.useMask) me.unMask();
 
