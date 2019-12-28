@@ -58,7 +58,8 @@
                 d3: config.version.d3 || '3.5.14',
                 eCharts: config.version.eCharts || '3.1.2',
                 highCharts: config.version.highCharts || '4.1.5',
-                moment: config.version.moment || '2.13.0'
+                moment: config.version.moment || '2.13.0',
+                codemirror: config.version.codemirror || '5.50.0'
             },
             style: {
                 ext: config.style ? config.style.ext || 'triton' : 'triton'
@@ -186,7 +187,8 @@
             eCharts: 'Echarts/echarts' + me.getVersion('eCharts', '-') + '/echarts' + (me.isDebug ? '' : '.min'),
             highCharts: 'Highcharts/highcharts' + me.getVersion('highCharts', '-') + '/highcharts' + (me.isDebug ? '.src' : ''),
             highCharts3d: 'Highcharts/highcharts' + me.getVersion('highCharts', '-') + '/highcharts-3d' + (me.isDebug ? '.src' : ''),
-            navfn: 'nav.fn' + (me.isDebug ? '' : '.min') // 拓展插件
+            codemirror: 'Codemirror/codemirror' + me.getVersion('codemirror', '-') + '/lib/codemirror' + (me.isDebug ? '' : '.min'), // 编码插件
+            navfn: 'nav.fn' + (me.isDebug ? '' : '.min'), // 拓展插件
         },
         waitSeconds: 600,
         map: {
@@ -220,6 +222,9 @@
             },
             highCharts3d: {
                 deps: ['highCharts']
+            },
+            codemirror: {
+                deps: ['css!Codemirror/codemirror' + me.getVersion('codemirror', '-') + '/lib/codemirror' + (me.isDebug ? '' : '.min')]
             }
         }
     });
@@ -227,7 +232,7 @@
     /**
      * 加载动态库
      */
-    require(config.reqLibraries || ['jQuery', 'ext', 'd3', 'eCharts', 'highCharts', 'moment', 'vue'], function ($, Ext, d3, echarts, Highcharts, moment, vue) {
+    require(config.reqLibraries || ['jQuery', 'ext', 'd3', 'eCharts', 'highCharts', 'moment', 'vue', 'codemirror'], function ($, Ext, d3, echarts, Highcharts, moment, vue, codemirror) {
         me.library.jQuery = me.library.$ = $;
         me.library.Ext = Ext;
         me.library.d3 = d3;
@@ -235,6 +240,8 @@
         me.library.Highcharts = Highcharts;
         me.library.moment = moment;
         me.library.vue = vue;
+        me.library.vue = vue;
+        me.library.codemirror = codemirror;
 
         if (config.useMask) me.unMask();
 
