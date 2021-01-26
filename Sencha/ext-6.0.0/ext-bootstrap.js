@@ -61,8 +61,8 @@
     }
 
     document.write('<script type="text/javascript" charset="UTF-8" src="' +
-        path + 'build/ext-all' + (isDevelopment ? '-debug' : '') + '.js"></script>');
+        path + 'ext-all' + (isDevelopment ? '-debug' : '') + '.js"></script>');
     // 加载中文库
     document.write('<script type="text/javascript" charset="UTF-8" src="' +
-            path + 'build/classic/locale/locale-zh_CN' + (isDevelopment ? '-debug' : '') + '.js"></script>');
+            path + 'classic/locale/locale-zh_CN' + (isDevelopment ? '-debug' : '') + '.js"></script>');
 })();

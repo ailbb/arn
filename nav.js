@@ -36,7 +36,7 @@
             reqExtends: wd.reqExtends || [],
             version: wd.versions || {},
             versionURL: wd.versionURL,
-            useMask: typeof wd.useMask == 'undefined' ? true : wd.useMask,
+            useMask: typeof wd.useMask == 'undefined' ? false : wd.useMask,
             style: {
                 ext: wd.extStyle || 'crisp' // aria/classic/crisp/gray/neptune/triton
             },
@@ -50,8 +50,9 @@
             isDebug: false,
             library: {},
             versions: {
-                requireCss: config.version.requireCss || '0.1.8',
+                requireCss: config.version.requireCss || '0.1.9',
                 jQuery: config.version.jQuery || '2.1.1',
+                jQuerySlide: config.version.jQuerySlide || '0.6.2',
                 vue: config.version.vue || '2.6.10',
                 bootstrap: config.version.bootstrap || '3.3.5',
                 ext: config.version.ext || '6.0.0',
@@ -92,6 +93,15 @@
                     version = versions[name];
                 return version ? (split || '') + version : versions;
             },
+
+            getResourcePath: function (li, file){
+                var list=[];
+                for(var i in li) {
+                    list.push(li[i] + file);
+                }
+                return list;
+            },
+
             getBaseUrl: function (script) {
                 var thiz = this,
                     scripts = document.getElementsByTagName('script'),
@@ -150,15 +160,15 @@
     if (config.useMask) me.loadMask();
     me.loadInit = config.loadInit || function (lib) {};
     me.defaultLoadInit = config.defaultLoadInit || function (lib) {
-            /**
-             * body禁用右键菜单
-             */
-            $(document.body).on('contextmenu', function (e) {
-                e.preventDefault();
-            });
+        /**
+         * body禁用右键菜单
+         */
+        $(document.body).on('contextmenu', function (e) {
+            e.preventDefault();
+        });
 
-            me.loadInit(lib);
-        };
+        me.loadInit(lib);
+    };
 
     /**
      * 加载配置
@@ -166,34 +176,61 @@
      * @paths: 需要加载包的路径（相对于根路径）
      * @map: 告诉RequireJS在任何模块之前，都先载入这个模块，这样别的模块依赖于css!../style/1.css这样的模块都知道怎么处理了
      * @shim : { // 依赖引用配置
-    *  *: { // 引用对象
-    *      deps: [''], // 所需要的依赖（css!path 表示调用require-css插件加载css文件）
-    *      exports: '' // 需要返回的模块对象
-    *    }
-    * }
+     *  *: { // 引用对象
+     *      deps: [''], // 所需要的依赖（css!path 表示调用require-css插件加载css文件）
+     *      exports: '' // 需要返回的模块对象
+     *    }
+     * }
      */
     require.config({
         baseUrl: me.baseURL,
         urlArgs: me.getAppVersion(),
         paths: {
-            moment: 'Moment/moment' + me.getVersion('moment', '-') + '/moment' + (me.isDebug ? '' : '.min'),
-            jQuery: 'JQuery/jquery' + me.getVersion('jQuery', '-') + '/jquery' + (me.isDebug ? '' : '.min'),
-            vue: 'Vue/vue' + me.getVersion('vue', '-') + '/vue' + (me.isDebug ? '' : '.min'),
-            jQuerySlide: 'JQuery/jquery' + me.getVersion('jQuery', '-') + '/jquery.SuperSlide' + (me.isDebug ? '' : '.min'),
-            bootstrap: 'Bootstrap/bootstrap' + me.getVersion('bootstrap', '-') + '/dist/js/bootstrap' + (me.isDebug ? '' : '.min'),
-            ext: 'Sencha/ext' + me.getVersion('ext', '-') + '/build/ext-all' + (me.isDebug ? '-debug' : ''),
-            extLocal: 'Sencha/ext' + me.getVersion('ext', '-') + '/build/classic/locale/locale-zh_CN' + (me.isDebug ? '-debug' : ''),
-            d3: 'D3/d3' + me.getVersion('d3', '-') + '/d3' + (me.isDebug ? '' : '.min'),
-            eCharts: 'Echarts/echarts' + me.getVersion('eCharts', '-') + '/echarts' + (me.isDebug ? '' : '.min'),
-            highCharts: 'Highcharts/highcharts' + me.getVersion('highCharts', '-') + '/highcharts' + (me.isDebug ? '.src' : ''),
-            highCharts3d: 'Highcharts/highcharts' + me.getVersion('highCharts', '-') + '/highcharts-3d' + (me.isDebug ? '.src' : ''),
-            codemirror: 'Codemirror/codemirror' + me.getVersion('codemirror', '-') + '/lib/codemirror' + (me.isDebug ? '' : '.min'), // 编码插件
-            navfn: 'nav.fn' + (me.isDebug ? '' : '.min'), // 拓展插件
+            requireCss: me.getResourcePath(['RequireJS/require-css-', 'https://s1.pstatp.com/cdn/expire-1-M/require-css/', 'https://cdn.bootcdn.net/ajax/libs/require-css/', ],
+                me.getVersion('requireCss') + '/css' + (me.isDebug ? '' : '.min')),
+
+            jQuery: me.getResourcePath(['https://s3.pstatp.com/cdn/expire-1-M/jquery/','https://cdn.bootcdn.net/ajax/libs/jquery/','JQuery/jquery-'],
+                me.getVersion('jQuery') + '/jquery' + (me.isDebug ? '' : '.min')),
+
+            jQuerySlide: me.getResourcePath(['https://s2.pstatp.com/cdn/expire-1-M/superslides/','https://cdn.bootcdn.net/ajax/libs/superslides/','jQuerySlide/'],
+                me.getVersion('jQuerySlide') + '/jquery.superslides' + (me.isDebug ? '' : '.min')),
+
+            moment: me.getResourcePath(['https://s1.pstatp.com/cdn/expire-1-M/moment.js/','https://cdn.bootcdn.net/ajax/libs/moment.js/','Moment/moment-'],
+                me.getVersion('moment') + '/moment' + (me.isDebug ? '' : '.min')),
+
+            bootstrap: me.getResourcePath(['https://s0.pstatp.com/cdn/expire-1-M/twitter-bootstrap/', 'https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/','Bootstrap/bootstrap-'],
+                me.getVersion('bootstrap') + '/js/bootstrap' + (me.isDebug ? '' : '.min')),
+
+            vue: me.getResourcePath(['https://s3.pstatp.com/cdn/expire-1-M/vue/','https://cdn.bootcdn.net/ajax/libs/vue/','Vue/vue-'],
+                me.getVersion('vue') + '/vue' + (me.isDebug ? '' : '.min')),
+
+            ext: me.getResourcePath(['https://s2.pstatp.com/cdn/expire-1-M/extjs/', 'https://cdn.bootcdn.net/ajax/libs/extjs/', 'Sencha/ext-'],
+                me.getVersion('ext') + '/ext-all' + (me.isDebug ? '-debug' : '')),
+
+            extLocal: me.getResourcePath(['https://s2.pstatp.com/cdn/expire-1-M/extjs/', 'https://cdn.bootcdn.net/ajax/libs/extjs/', 'Sencha/ext-'],
+                me.getVersion('ext') + '/classic/locale/locale-zh_CN' + (me.isDebug ? '-debug' : '')),
+
+            d3: me.getResourcePath(['https://s2.pstatp.com/cdn/expire-1-M/d3/', 'https://cdn.bootcdn.net/ajax/libs/d3/', 'D3/d3-'],
+                me.getVersion('d3') + '/d3' + (me.isDebug ? '' : '.min')),
+
+            eCharts: me.getResourcePath(['https://s2.pstatp.com/cdn/expire-1-M/echarts/', 'https://cdn.bootcdn.net/ajax/libs/echarts/', 'Echarts/echarts-'],
+                me.getVersion('eCharts') + '/echarts' + (me.isDebug ? '' : '.min')),
+
+            highCharts: me.getResourcePath(['https://s3.pstatp.com/cdn/expire-1-M/highcharts/', 'https://cdn.bootcdn.net/ajax/libs/highcharts/', 'Highcharts/highcharts-'],
+                me.getVersion('highCharts') + '/highcharts' + (me.isDebug ? '.src' : '')),
+
+            highCharts3d: me.getResourcePath(['https://s3.pstatp.com/cdn/expire-1-M/highcharts/', 'https://cdn.bootcdn.net/ajax/libs/highcharts/', 'Highcharts/highcharts-'],
+                me.getVersion('highCharts') + '/highcharts-3d' + (me.isDebug ? '.src' : '')),
+
+            codemirror: me.getResourcePath(['https://cdn.bootcdn.net/ajax/libs/codemirror/', 'https://s2.pstatp.com/cdn/expire-1-M/codemirror/', 'Codemirror/codemirror-'],
+                me.getVersion('codemirror') + '/codemirror' + (me.isDebug ? '' : '.min')), // 编码插件
+
+            navfn: ['nav.fn' + (me.isDebug ? '' : '.min')] // 拓展插件
         },
         waitSeconds: 600,
         map: {
             '*': {
-                'css': 'RequireJS/require-css' + me.getVersion('requireCss', '-') + '/css' + (me.isDebug ? '' : '.min')
+                'css': 'requireCss'
             }
         },
         shim: {
@@ -205,10 +242,13 @@
                 deps: ['jQuery']
             },
             bootstrap: {
-                deps: ['jQuery', 'css!Bootstrap/bootstrap' + me.getVersion('bootstrap', '-') + '/dist/css/bootstrap' + (me.isDebug ? '' : '.min')]
+                deps: ['jQuery'].concat(me.getResourcePath(['css!https://s0.pstatp.com/cdn/expire-1-M/twitter-bootstrap/', 'css!https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/','css!Bootstrap/bootstrap-'],
+                    me.getVersion('bootstrap') + '/css/bootstrap' + (me.isDebug ? '' : '.min')))
             },
             ext: {
-                deps: ['css!Sencha/ext' + me.getVersion('ext', '-') + '/build/classic/theme-' + me.style.ext + '/resources/theme-' + me.style.ext + '-all' + (me.isDebug ? '-debug' : '')],
+                deps: me.getResourcePath(['css!https://s2.pstatp.com/cdn/expire-1-M/extjs/', 'css!https://cdn.bootcdn.net/ajax/libs/extjs/', 'css!Sencha/ext-'],
+                    me.getVersion('ext') + '/classic/theme-' + me.style.ext + '/resources/theme-' + me.style.ext + '-all' + (me.isDebug ? '-debug' : '')),
+
                 exports: 'Ext'
             },
             extLocal: {
@@ -224,7 +264,8 @@
                 deps: ['highCharts']
             },
             codemirror: {
-                deps: ['css!Codemirror/codemirror' + me.getVersion('codemirror', '-') + '/lib/codemirror' + (me.isDebug ? '' : '.min')]
+                deps: me.getResourcePath(['css!https://cdn.bootcdn.net/ajax/libs/codemirror/', 'css!https://s2.pstatp.com/cdn/expire-1-M/codemirror/', 'css!Codemirror/codemirror-'],
+                    me.getVersion('codemirror') + '/codemirror' + (me.isDebug ? '' : '.min')) // 编码插件
             }
         }
     });

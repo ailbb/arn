@@ -13,11 +13,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- 样式动态加载导致页面跳动，故首先将框架的样式引入 -->
-    <link rel="stylesheet" type="text/css" href="Bootstrap/bootstrap-3.3.5/dist/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="Sencha/ext-6.0.0/build/classic/theme-crisp/resources/theme-crisp-all.css">
+<!--    <link rel="stylesheet" type="text/css" href="Bootstrap/bootstrap-3.3.5/css/bootstrap.css">-->
+<!--    <link rel="stylesheet" type="text/css" href="Sencha/ext-6.0.0/classic/theme-crisp/resources/theme-crisp-all.css">-->
 
     <!--Codemirror-框架-->
-    <link href="Codemirror/codemirror-5.50.0/lib/codemirror.min.css" rel="stylesheet">
+    <link href="Codemirror/codemirror-5.50.0/codemirror.min.css" rel="stylesheet">
     <link href="Codemirror/codemirror-5.50.0/addon/hint/show-hint.css" rel="stylesheet">
 
     <!--链接文件导航-->
@@ -49,13 +49,18 @@
          **/
         var requireConfig = {
             reqLibraries: [
+                'requireCss',
+                'moment',
                 'jQuery',
+                'jQuerySlide',
+                'vue',
+                'bootstrap',
                 'ext',
+                'extLocal',
                 'd3',
                 'eCharts',
-                'highCharts',
-                'moment',
-                'vue',
+                'eCharts',
+                'highCharts3d',
                 'navfn',
                 'codemirror',
                 'test.js'
