@@ -5,8 +5,8 @@
     var wd = window,
         arn = wd.arn || {},
         currentPath = document.currentScript.src.substr(0, document.currentScript.src.lastIndexOf('/'));
-        arn.arnCfg = wd.arnCfg || wd.requireConfig || arn.arnCfg || {};
-        arn.arnCfg.mask = arn.arnCfg.mask || {}; // 获取配置项
+    arn.arnCfg = wd.arnCfg || wd.requireConfig || arn.arnCfg || {};
+    arn.arnCfg.mask = arn.arnCfg.mask || {}; // 获取配置项
 
     var arnMask = arn.mask || {
         maskType: 'css', // css和gif两种方式
@@ -58,8 +58,8 @@
         checkNav: function (){
             window.addEventListener('load', function (){
                 setTimeout(function (){
-                    // 延迟500s检查arn.nav框架是否正常加载，不正常加载则自动取消遮罩
-                    if(!arn.nav) arnMask.unMask();
+                    // 延迟1500s检查arn.nav框架是否正常加载，不正常加载则自动取消遮罩
+                    if(!arn.nav || Object.keys(arn.nav).length == 0) arnMask.unMask();
                 }, 1500);
             });
         },
