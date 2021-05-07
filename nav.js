@@ -39,6 +39,7 @@
             reqLibraries: wd.reqLibraries,
             reqPlugins: wd.reqPlugins,
             reqExtends: wd.reqExtends || [],
+            navfn: typeof wd.navfn == 'undefined' ? true : wd.navfn,
             version: wd.versions || {},
             versionURL: wd.versionURL,
             useMask: typeof wd.useMask == 'undefined' ? false : wd.useMask,
@@ -371,7 +372,9 @@
     /**
      * 加载扩展库
      */
-    require(['navfn'].concat(config.reqExtends), function () {
+    if(config.navfn) config.reqExtends.push('navfn');
+
+    require(config.reqExtends), function () {
         console.info('加载扩展库完成 (load fn done.)');
     });
 
