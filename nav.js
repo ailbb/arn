@@ -374,7 +374,7 @@
      */
     if(config.navfn) config.reqExtends.push('navfn');
 
-    require(config.reqExtends), function () {
+    require(config.reqExtends, function () {
         console.info('加载扩展库完成 (load fn done.)');
     });
 
