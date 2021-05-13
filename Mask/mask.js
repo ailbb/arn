@@ -74,7 +74,7 @@
                 var boxHeight = 240, boxMarginTop=50, loaderPaddingTop=window.innerHeight/2-boxHeight/2;
                 maskElement.style.width = window.innerWidth + 'px';
                 maskElement.style.height = window.innerHeight + 'px';
-                maskElement.style.backgroundColor = arnMask.maskBgColorTheme;
+                maskElement.style.backgroundColor = option.maskBgColorTheme;
                 maskElement.style.position = 'fixed';
                 maskElement.style.top = 0;
                 maskElement.style.left = 0;
