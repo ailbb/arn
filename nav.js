@@ -237,7 +237,7 @@
             me.getVersion('moment') + '/moment' + (me.isDebug ? '' : '.min')),
 
         bootstrap: me.getResourcePath(['https://s0.pstatp.com/cdn/expire-1-M/twitter-bootstrap/', 'https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/','Bootstrap/bootstrap-'],
-            me.getVersion('bootstrap') + '/js/bootstrap' + (me.isDebug ? '' : '.min')),
+            me.getVersion('bootstrap') + '/js/bootstrap' + (/5/.test(me.getVersion('bootstrap')) ? '.bundle' : '') + (me.isDebug ? '' : '.min')),
 
         vue: me.getResourcePath(['https://s3.pstatp.com/cdn/expire-1-M/vue/','https://cdn.bootcdn.net/ajax/libs/vue/','Vue/vue-'],
             me.getVersion('vue') + '/vue' + (me.isDebug ? '' : '.min')),
