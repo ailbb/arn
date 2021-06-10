@@ -1,3 +1,4 @@
+var $AFPath = ((p,r) => p.substring(0, r.exec(p).index-1))(location.href, /public|arn|views/); // 前端模块的路径
 
 /**
  * 下拉框组件
@@ -22,7 +23,7 @@ Ext.define('ExPlugins.textwindow.TextWindow', {
         return Ext.Loader.getPath('ExPlugins') + 'textwindow/'; // 前端模块的路径
     },
     getCodemirrorPath: function (){
-        return 'Codemirror/codemirror-5.50.0/';
+        return 'arn/Codemirror/codemirror-5.50.0/';
     },
     getRequire: function (){
         if(!require) console.error("not found require js !");
@@ -288,7 +289,7 @@ Ext.define('ExPlugins.textwindow.TextWindow', {
         toolbar.mask("初次使用，加载语言中...");
 
         me.getRequire()([
-            me.getCodemirrorPath() + 'codemirror',
+            'codemirror',
             me.getCodemirrorPath() + 'mode/'+mode+'/'+mode+'',
             me.getCodemirrorPath() + 'addon/hint/'+mode+'-hint',
             me.getCodemirrorPath() + 'addon/hint/show-hint',

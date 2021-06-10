@@ -61,6 +61,7 @@
                 jQuerySlide: config.version.jQuerySlide || '0.6.2',
                 vue: config.version.vue || '2.6.10',
                 bootstrap: config.version.bootstrap || '3.3.5',
+                bootstrapIcons: config.version.bootstrapIcons || '1.5.0',
                 ext: config.version.ext || '6.0.0',
                 d3: config.version.d3 || '3.5.14',
                 eCharts: config.version.eCharts || '3.1.2',
@@ -135,7 +136,8 @@
                 for (var i = scripts.length; i--;) {
                     var scriptSrc = scripts[i].src,
                         match = scriptSrc.match(scriptRegexNoDebug) || scriptSrc.match(scriptRegexDebug);
-                    if (match) return scriptSrc.substring(0, scriptSrc.length - match[0].length);
+                    if (match)
+                        return scriptSrc.substring(0, scriptSrc.length - match[0].length);
                 }
                 return script || '';
             },
@@ -237,7 +239,7 @@
             me.getVersion('moment') + '/moment' + (me.isDebug ? '' : '.min')),
 
         bootstrap: me.getResourcePath(['https://s0.pstatp.com/cdn/expire-1-M/twitter-bootstrap/', 'https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/','Bootstrap/bootstrap-'],
-            me.getVersion('bootstrap') + '/js/bootstrap' + (/5/.test(me.getVersion('bootstrap')) ? '.bundle' : '') + (me.isDebug ? '' : '.min')),
+            me.getVersion('bootstrap') + '/js/bootstrap' + (/^5/.test(me.getVersion('bootstrap')) ? '.bundle' : '') + (me.isDebug ? '' : '.min')),
 
         vue: me.getResourcePath(['https://s3.pstatp.com/cdn/expire-1-M/vue/','https://cdn.bootcdn.net/ajax/libs/vue/','Vue/vue-'],
             me.getVersion('vue') + '/vue' + (me.isDebug ? '' : '.min')),
@@ -262,8 +264,8 @@
 
         codemirror: me.getResourcePath(['https://cdn.bootcdn.net/ajax/libs/codemirror/', 'https://s2.pstatp.com/cdn/expire-1-M/codemirror/', 'Codemirror/codemirror-'],
             me.getVersion('codemirror') + '/codemirror' + (me.isDebug ? '' : '.min')), // 编码插件
-
-        navfn: ['nav.fn' + (me.isDebug ? '' : '.min')] // 拓展插件
+        navfn: ['nav.fn' + (me.isDebug ? '' : '.min')], // 拓展插件
+        arn: me.baseURL // arn库的根路径
     };
 
     (function (pathObj) {
@@ -311,8 +313,22 @@
                 deps: ['jQuery']
             },
             bootstrap: {
-                deps: ['jQuery'].concat(me.getResourcePath(['css!https://s0.pstatp.com/cdn/expire-1-M/twitter-bootstrap/', 'css!https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/','css!Bootstrap/bootstrap-'],
-                    me.getVersion('bootstrap') + '/css/bootstrap' + (me.isDebug ? '' : '.min')))
+                deps: ['jQuery'].concat(
+                    me.getResourcePath([
+                        'css!https://s0.pstatp.com/cdn/expire-1-M/twitter-bootstrap/',
+                        'css!https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/',
+                        'css!Bootstrap/bootstrap-'
+                        ], me.getVersion('bootstrap') + '/css/bootstrap' + (me.isDebug ? '' : '.min')
+                    ).concat(
+                        /^5/.test(me.getVersion('bootstrap')) ?
+                        me.getResourcePath([
+                            'css!https://s0.pstatp.com/cdn/expire-1-M/bootstrap-icons/',
+                            'css!https://cdn.bootcdn.net/ajax/libs/bootstrap-icons/',
+                            'css!Bootstrap-icons/'
+                        ], me.getVersion('bootstrapIcons') + '/font/bootstrap-icons' + (me.isDebug ? '' : '')) :
+                        []
+                    )
+                )
             },
             ext: {
                 deps: me.getResourcePath(['css!https://s2.pstatp.com/cdn/expire-1-M/extjs/', 'css!https://cdn.bootcdn.net/ajax/libs/extjs/', 'css!Sencha/ext-'],
@@ -333,6 +349,7 @@
                 deps: ['highCharts']
             },
             codemirror: {
+                exports: 'Codemirror',
                 deps: me.getResourcePath(['css!https://cdn.bootcdn.net/ajax/libs/codemirror/', 'css!https://s2.pstatp.com/cdn/expire-1-M/codemirror/', 'css!Codemirror/codemirror-'],
                     me.getVersion('codemirror') + '/codemirror' + (me.isDebug ? '' : '.min')) // 编码插件
             }
