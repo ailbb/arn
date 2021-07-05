@@ -67,7 +67,8 @@
                 eCharts: config.version.eCharts || '3.1.2',
                 highCharts: config.version.highCharts || '4.1.5',
                 moment: config.version.moment || '2.13.0',
-                codemirror: config.version.codemirror || '5.50.0'
+                codemirror: config.version.codemirror || '5.50.0',
+                pdfobject: config.version.pdfobject || '2.2.4',
             },
             style: {
                 ext: config.style ? config.style.ext || 'triton' : 'triton'
@@ -222,7 +223,10 @@
             alias: ["highCharts","Highcharts"]},
         "codemirror": {
             globalName: 'Codemirror',
-            alias: ["codemirror", "Codemirror"]}
+            alias: ["codemirror", "Codemirror"]},
+        "pdfobject": {
+            globalName: 'PDFObject',
+            alias: ["pdfobject", "PDFObject"]}
     };
 
     var paths = {
@@ -264,6 +268,10 @@
 
         codemirror: me.getResourcePath(['https://cdn.bootcdn.net/ajax/libs/codemirror/', 'https://s2.pstatp.com/cdn/expire-1-M/codemirror/', 'Codemirror/codemirror-'],
             me.getVersion('codemirror') + '/codemirror' + (me.isDebug ? '' : '.min')), // 编码插件
+
+        pdfobject: me.getResourcePath(['https://cdn.bootcdn.net/ajax/libs/pdfobject/', 'https://s2.pstatp.com/cdn/expire-1-M/pdfobject/', 'PDFobject/pdfobject-'],
+            me.getVersion('pdfobject') + '/pdfobject' + (me.isDebug ? '' : '.min')), // 编码插件
+
         navfn: ['nav.fn' + (me.isDebug ? '' : '.min')], // 拓展插件
         arn: me.baseURL // arn库的根路径
     };
@@ -360,7 +368,7 @@
      * 加载动态库
      * 'jQuery', 'ext', 'd3', 'eCharts', 'highCharts', 'moment', 'vue', 'codemirror'
      */
-    require(config.reqLibraries || [], function ($, Ext, d3, echarts, Highcharts, moment, vue, codemirror) {
+    require(config.reqLibraries || [], function ($, Ext, d3, echarts, Highcharts, moment, vue, codemirror, PDFobject) {
         me.library.jQuery = me.library.$ = $;
         me.library.Ext = Ext;
         me.library.d3 = d3;
@@ -370,6 +378,7 @@
         me.library.vue = vue;
         me.library.vue = vue;
         me.library.codemirror = codemirror;
+        me.library.PDFobject = PDFobject;
 
         if (config.useMask && !config.notAllowClose) me.unMask();
 
