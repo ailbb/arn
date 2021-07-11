@@ -61,6 +61,7 @@
                 jQuerySlide: config.version.jQuerySlide || '0.6.2',
                 vue: config.version.vue || '2.6.10',
                 bootstrap: config.version.bootstrap || '3.3.5',
+                elementUI: config.version.elementUI || '2.15.0',
                 bootstrapIcons: config.version.bootstrapIcons || '1.5.0',
                 ext: config.version.ext || '6.0.0',
                 d3: config.version.d3 || '3.5.14',
@@ -226,7 +227,10 @@
             alias: ["codemirror", "Codemirror"]},
         "pdfobject": {
             globalName: 'PDFObject',
-            alias: ["pdfobject", "PDFObject"]}
+            alias: ["pdfobject", "PDFObject"]},
+        "elementUI": {
+            globalName: 'ElementUI',
+            alias: ["elementUI", "ElementUI"]}
     };
 
     var paths = {
@@ -242,8 +246,11 @@
         moment: me.getResourcePath(['https://s1.pstatp.com/cdn/expire-1-M/moment.js/','https://cdn.bootcdn.net/ajax/libs/moment.js/','Moment/moment-'],
             me.getVersion('moment') + '/moment' + (me.isDebug ? '' : '.min')),
 
-        bootstrap: me.getResourcePath(['https://s0.pstatp.com/cdn/expire-1-M/twitter-bootstrap/', 'https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/','Bootstrap/bootstrap-'],
+        bootstrap: me.getResourcePath(['https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/','Bootstrap/bootstrap-'],
             me.getVersion('bootstrap') + '/js/bootstrap' + (/^5/.test(me.getVersion('bootstrap')) ? '.bundle' : '') + (me.isDebug ? '' : '.min')),
+
+        elementUI: me.getResourcePath(['https://s0.pstatp.com/cdn/expire-1-M/element-ui/', 'https://cdn.bootcdn.net/ajax/libs/element-ui/','ElementUI/element-ui-'],
+            me.getVersion('elementUI') + '/index' + (me.isDebug ? '' : '.min')),
 
         vue: me.getResourcePath(['https://s3.pstatp.com/cdn/expire-1-M/vue/','https://cdn.bootcdn.net/ajax/libs/vue/','Vue/vue-'],
             me.getVersion('vue') + '/vue' + (me.isDebug ? '' : '.min')),
@@ -320,17 +327,26 @@
             jQuerySlide: {
                 deps: ['jQuery']
             },
+            elementUI: {
+                deps: ['vue'].concat(
+                    me.getResourcePath(
+                        [
+                            'css!https://s0.pstatp.com/cdn/expire-1-M/element-ui/',
+                            'css!https://cdn.bootcdn.net/ajax/libs/element-ui/',
+                            'css!ElementUI/element-ui-'
+                        ], me.getVersion('elementUI') + '/theme-chalk/index' + (me.isDebug ? '' : '.min')
+                    )
+                )
+            },
             bootstrap: {
                 deps: ['jQuery'].concat(
                     me.getResourcePath([
-                        'css!https://s0.pstatp.com/cdn/expire-1-M/twitter-bootstrap/',
                         'css!https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/',
                         'css!Bootstrap/bootstrap-'
                         ], me.getVersion('bootstrap') + '/css/bootstrap' + (me.isDebug ? '' : '.min')
                     ).concat(
                         /^5/.test(me.getVersion('bootstrap')) ?
                         me.getResourcePath([
-                            'css!https://s0.pstatp.com/cdn/expire-1-M/bootstrap-icons/',
                             'css!https://cdn.bootcdn.net/ajax/libs/bootstrap-icons/',
                             'css!Bootstrap-icons/'
                         ], me.getVersion('bootstrapIcons') + '/font/bootstrap-icons' + (me.isDebug ? '' : '')) :
@@ -358,7 +374,7 @@
             },
             codemirror: {
                 exports: 'Codemirror',
-                deps: me.getResourcePath(['css!https://cdn.bootcdn.net/ajax/libs/codemirror/', 'css!https://s2.pstatp.com/cdn/expire-1-M/codemirror/', 'css!Codemirror/codemirror-'],
+                deps: me.getResourcePath(['css!https://s2.pstatp.com/cdn/expire-1-M/codemirror/', 'css!Codemirror/codemirror-'],
                     me.getVersion('codemirror') + '/codemirror' + (me.isDebug ? '' : '.min')) // 编码插件
             }
         }
@@ -368,7 +384,7 @@
      * 加载动态库
      * 'jQuery', 'ext', 'd3', 'eCharts', 'highCharts', 'moment', 'vue', 'codemirror'
      */
-    require(config.reqLibraries || [], function ($, Ext, d3, echarts, Highcharts, moment, vue, codemirror, PDFobject) {
+    require(config.reqLibraries || [], function ($, Ext, d3, echarts, Highcharts, moment, vue, elementUI, codemirror, PDFobject) {
         me.library.jQuery = me.library.$ = $;
         me.library.Ext = Ext;
         me.library.d3 = d3;
@@ -376,7 +392,7 @@
         me.library.Highcharts = Highcharts;
         me.library.moment = moment;
         me.library.vue = vue;
-        me.library.vue = vue;
+        me.library.elementUI = elementUI;
         me.library.codemirror = codemirror;
         me.library.PDFobject = PDFobject;
 
