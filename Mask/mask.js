@@ -111,7 +111,7 @@
                     var styleEl = document.createElement('style');
                     // 解决遮罩动画缺少伪元素下半截的问题
                     styleEl.textContent = `
-                    .loader:after{ background: ${option.maskLdColorTheme}; }
+                        .loader,.loader:before,.loader:after{ background: ${option.maskLdColorTheme} !important; }
                     `;
 
                     maskEl.appendChild(maskChildEl);
