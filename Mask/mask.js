@@ -97,7 +97,8 @@
                 if(arnMask.domIsReady() || document.body) {
                     var linkEl = document.createElement('link');
                     linkEl.href = linkHref;
-                    linkEl.setAttribute('ref', 'stylesheet');
+                    linkEl.type = 'text/css';
+                    linkEl.rel = 'stylesheet';
 
                     var maskEl = document.createElement('div');
                     maskEl.className = option.maskCls + " arn-loader";
