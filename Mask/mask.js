@@ -25,11 +25,11 @@
         getCls: function (maskCls, maskLdColorTheme){
             if(maskCls == 'load1') return `<style>
                 .${maskCls} .loader, .${maskCls} .loader:before, .${maskCls} .loader:after{
-                    background: ${maskLdColorTheme}!important; 
-                } 
-    
+                    background: ${maskLdColorTheme}!important;
+                }
+
                 .loader:after{
-                    background: ${maskLdColorTheme}!important; 
+                    background: ${maskLdColorTheme}!important;
                 }
             </style>`;
 
@@ -88,34 +88,54 @@
 
                 var head = document.getElementsByTagName('head')[0],
                     linkHref = `${option.getBaseUrl()}/css-loading/${option.maskCls}.css`,
-                    linkElement = `<link href="${linkHref}" rel=stylesheet type="text/css"/>`,
-                    maskElement = `<div class="${option.maskCls} arn-loader"><div class="loader" style="color: ${option.maskLdColorTheme}">Loading...</div></div>`,
+                    linkElement = `<link href="${linkHref}" rel=stylesheet type="text/css" />`,
+                    maskElement = `<div id="loading-Boxer-Unity" class="${option.maskCls} arn-loader"><div class="loader" ></div></div>`,
                     styleElement = arnMask.getCls(option.maskCls, option.maskLdColorTheme),
                     _this = this
                 ;
-
                 if(arnMask.domIsReady() || document.body) {
-                    var linkEl = document.createElement('link');
-                    linkEl.href = linkHref;
-                    linkEl.type = 'text/css';
-                    linkEl.rel = 'stylesheet';
-
+                    var linkzzzzzz = document.createElement('link');
+                    linkzzzzzz.href = linkHref;
+                    linkzzzzzz.type = 'text/css';
+                    linkzzzzzz.rel = 'stylesheet';
+                    head.appendChild(linkzzzzzz);
                     var maskEl = document.createElement('div');
                     maskEl.className = option.maskCls + " arn-loader";
 
                     var maskChildEl = document.createElement('div');
                     maskChildEl.className = "loader";
-                    maskChildEl.textContent = "Loading...";
-                    maskChildEl.style.color = option.maskLdColorTheme;
-
-                    var styleEl = document.createElement('style');
+                    // maskChildEl.style.color = option.maskLdColorTheme;
                     // 解决遮罩动画缺少伪元素下半截的问题
-                    styleEl.textContent = `
-                        .loader,.loader:before,.loader:after{ background: ${option.maskLdColorTheme} !important; }
-                    `;
+                    var styleEl = document.createElement('style');
+                    if(option.maskCls == "load1"){
+                        styleEl.textContent = ` 
+                             .${option.maskCls} .loader, .${option.maskCls} .loader:before, .${option.maskCls} .loader:after{background: ${option.maskLdColorTheme}!important;}
+                             .${option.maskCls} .loader{color:${option.maskLdColorTheme}!important;}
+                        `;
+                    }else if(option.maskCls == "load2"){
+                        styleEl.textContent = `
+                             .${option.maskCls} .loader, .${option.maskCls} .loader:before, .${option.maskCls} .loader:after{background:  ${option.maskBgColorTheme}!important;}
+                             .${option.maskCls} .loader{color:${option.maskLdColorTheme}!important;}
+                        `;
+                    }else if(option.maskCls == "load3"){
+                        styleEl.textContent = `
+                             .${option.maskCls} .loader:before, .${option.maskCls} .loader:after{background: ${option.maskBgColorTheme}!important;}
+                             .${option.maskCls} .loader{background:linear-gradient(to right, ${option.maskLdColorTheme} 10%, rgba(255, 255, 255, 0) 42%)!important;}
+                        `;
+                    }else if(option.maskCls == "load8"){
+                        styleEl.textContent = `
+                            .${option.maskCls} .loader{border-left:1.1em solid ${option.maskLdColorTheme}!important;}
+
+                        `;
+                    }else{
+                        styleEl.textContent = `
+                            .${option.maskCls} .loader{color:${option.maskLdColorTheme}!important;}
+
+                        `;
+                    }
+
 
                     maskEl.appendChild(maskChildEl);
-                    head.appendChild(linkEl);
                     head.appendChild(styleEl);
                     document.body.appendChild(maskEl);
                 } else {
