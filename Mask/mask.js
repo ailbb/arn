@@ -78,7 +78,7 @@
                 maskElement.style.position = 'fixed';
                 maskElement.style.top = 0;
                 maskElement.style.left = 0;
-                maskElement.style.zIndex = 7777;
+                maskElement.style.zIndex = 77777;
                 maskElement.style.paddingTop = loaderPaddingTop + 'px';
             },
             loadMask: function (option){
