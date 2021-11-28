@@ -13,8 +13,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- 样式动态加载导致页面跳动，故首先将框架的样式引入 -->
-<!--    <link rel="stylesheet" type="text/css" href="Bootstrap/bootstrap-3.3.5/css/bootstrap.css">-->
-<!--    <link rel="stylesheet" type="text/css" href="Sencha/ext-6.0.0/classic/theme-crisp/resources/theme-crisp-all.css">-->
+    <!--    <link rel="stylesheet" type="text/css" href="Bootstrap/bootstrap-3.3.5/css/bootstrap.css">-->
+    <!--    <link rel="stylesheet" type="text/css" href="Sencha/ext-6.0.0/classic/theme-crisp/resources/theme-crisp-all.css">-->
 
     <!--Codemirror-框架-->
     <link href="Codemirror/codemirror-5.50.0/codemirror.min.css" rel="stylesheet">
@@ -63,7 +63,9 @@
                 'eCharts',
                 'highCharts3d',
                 'navfn',
-                'elementUI',
+                'ELEMENT', // elementui强制使用了 'ELEMENT' 作为elementui的全局变量，所以我们在使用时候只能引用他
+                // Vue.use(ELEMENT); // 第一种方式加载ElementUI
+                // ELEMENT.install(Vue); // 第二种方式加载ElementUI
                 'codemirror',
                 'test.js'
             ],
@@ -76,7 +78,7 @@
 
     <!--框架配置end-->
 
-    </head>
+</head>
 <body>
 
 <script>

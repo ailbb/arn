@@ -61,7 +61,7 @@
                 jQuerySlide: config.version.jQuerySlide || '0.6.2',
                 vue: config.version.vue || '2.6.10',
                 bootstrap: config.version.bootstrap || '3.3.5',
-                elementUI: config.version.elementUI || '2.15.0',
+                ELEMENT: config.version.elementUI ||  config.version.ELEMENT || '2.15.0',
                 bootstrapIcons: config.version.bootstrapIcons || '1.5.0',
                 ext: config.version.ext || '6.0.0',
                 d3: config.version.d3 || '3.5.14',
@@ -126,6 +126,8 @@
                 for(var i in li) {
                     list.push(li[i] + file);
                 }
+
+                console.log(list);
                 return list;
             },
 
@@ -228,9 +230,9 @@
         "pdfobject": {
             globalName: 'PDFObject',
             alias: ["pdfobject", "PDFObject"]},
-        "elementUI": {
-            globalName: 'ElementUI',
-            alias: ["elementUI", "ElementUI"]}
+        "ELEMENT": {
+            globalName: 'ELEMENT',
+            alias: ["elementUI", "ElementUI", "ELEMENT"]}
     };
 
     var paths = {
@@ -249,8 +251,8 @@
         bootstrap: me.getResourcePath(['https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/','Bootstrap/bootstrap-'],
             me.getVersion('bootstrap') + '/js/bootstrap' + (/^5/.test(me.getVersion('bootstrap')) ? '.bundle' : '') + (me.isDebug ? '' : '.min')),
 
-        elementUI: me.getResourcePath(['https://s0.pstatp.com/cdn/expire-1-M/element-ui/', 'https://cdn.bootcdn.net/ajax/libs/element-ui/','ElementUI/element-ui-'],
-            me.getVersion('elementUI') + '/index' + (me.isDebug ? '' : '.min')),
+        ELEMENT: me.getResourcePath(['https://s0.pstatp.com/cdn/expire-1-M/element-ui/', 'https://cdn.bootcdn.net/ajax/libs/element-ui/','ElementUI/element-ui-'],
+            me.getVersion('ELEMENT') + '/index' + (me.isDebug ? '' : '.min')),
 
         vue: me.getResourcePath(['https://s3.pstatp.com/cdn/expire-1-M/vue/','https://cdn.bootcdn.net/ajax/libs/vue/','Vue/vue-'],
             me.getVersion('vue') + '/vue' + (me.isDebug ? '' : '.min')),
@@ -316,10 +318,6 @@
             }
         },
         shim: {
-            jquery: {
-                exports: '$',
-                init: function init(e) {}
-            },
             jQuery: {
                 exports: '$',
                 init: function init(e) {}
@@ -327,14 +325,14 @@
             jQuerySlide: {
                 deps: ['jQuery']
             },
-            elementUI: {
+            ELEMENT: {
                 deps: ['vue'].concat(
                     me.getResourcePath(
                         [
                             'css!https://s0.pstatp.com/cdn/expire-1-M/element-ui/',
                             'css!https://cdn.bootcdn.net/ajax/libs/element-ui/',
-                            'css!ElementUI/element-ui-'
-                        ], me.getVersion('elementUI') + '/theme-chalk/index' + (me.isDebug ? '' : '.min')
+                            'css!/arn/ElementUI/element-ui-'
+                        ], me.getVersion('ELEMENT') + '/theme-chalk/index' + (me.isDebug ? '' : '.min')
                     )
                 )
             },
@@ -342,20 +340,20 @@
                 deps: ['jQuery'].concat(
                     me.getResourcePath([
                         'css!https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/',
-                        'css!Bootstrap/bootstrap-'
-                        ], me.getVersion('bootstrap') + '/css/bootstrap' + (me.isDebug ? '' : '.min')
+                        'css!/arn/Bootstrap/bootstrap-'
+                    ], me.getVersion('bootstrap') + '/css/bootstrap' + (me.isDebug ? '' : '.min')
                     ).concat(
                         /^5/.test(me.getVersion('bootstrap')) ?
-                        me.getResourcePath([
-                            'css!https://cdn.bootcdn.net/ajax/libs/bootstrap-icons/',
-                            'css!Bootstrap-icons/'
-                        ], me.getVersion('bootstrapIcons') + '/font/bootstrap-icons' + (me.isDebug ? '' : '')) :
-                        []
+                            me.getResourcePath([
+                                'css!https://cdn.bootcdn.net/ajax/libs/bootstrap-icons/',
+                                'css!/arn/Bootstrap-icons/'
+                            ], me.getVersion('bootstrapIcons') + '/font/bootstrap-icons' + (me.isDebug ? '' : '')) :
+                            []
                     )
                 )
             },
             ext: {
-                deps: me.getResourcePath(['css!https://s2.pstatp.com/cdn/expire-1-M/extjs/', 'css!https://cdn.bootcdn.net/ajax/libs/extjs/', 'css!Sencha/ext-'],
+                deps: me.getResourcePath(['css!https://s2.pstatp.com/cdn/expire-1-M/extjs/', 'css!https://cdn.bootcdn.net/ajax/libs/extjs/', 'css!/arn/Sencha/ext-'],
                     me.getVersion('ext') + '/classic/theme-' + me.style.ext + '/resources/theme-' + me.style.ext + '-all' + (me.isDebug ? '-debug' : '')),
 
                 exports: 'Ext'
@@ -374,7 +372,7 @@
             },
             codemirror: {
                 exports: 'Codemirror',
-                deps: me.getResourcePath(['css!https://s2.pstatp.com/cdn/expire-1-M/codemirror/', 'css!Codemirror/codemirror-'],
+                deps: me.getResourcePath(['css!https://s2.pstatp.com/cdn/expire-1-M/codemirror/', 'css!/arn/Codemirror/codemirror-'],
                     me.getVersion('codemirror') + '/codemirror' + (me.isDebug ? '' : '.min')) // 编码插件
             }
         }
@@ -384,17 +382,10 @@
      * 加载动态库
      * 'jQuery', 'ext', 'd3', 'eCharts', 'highCharts', 'moment', 'vue', 'codemirror'
      */
-    require(config.reqLibraries || [], function ($, Ext, d3, echarts, Highcharts, moment, vue, elementUI, codemirror, PDFobject) {
-        me.library.jQuery = me.library.$ = $;
-        me.library.Ext = Ext;
-        me.library.d3 = d3;
-        me.library.echarts = echarts;
-        me.library.Highcharts = Highcharts;
-        me.library.moment = moment;
-        me.library.vue = vue;
-        me.library.elementUI = elementUI;
-        me.library.codemirror = codemirror;
-        me.library.PDFobject = PDFobject;
+    require(config.reqLibraries || [], function () {
+        for(var i in config.reqLibraries) {
+            me.library[config.reqLibraries[i]] = arguments[i];
+        }
 
         if (config.useMask && !config.notAllowClose) me.unMask();
 
