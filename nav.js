@@ -248,7 +248,7 @@
         moment: me.getResourcePath(['https://s1.pstatp.com/cdn/expire-1-M/moment.js/','https://cdn.bootcdn.net/ajax/libs/moment.js/','Moment/moment-'],
             me.getVersion('moment') + '/moment' + (me.isDebug ? '' : '.min')),
 
-        bootstrap: me.getResourcePath(['https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/','Bootstrap/bootstrap-'],
+        bootstrap: me.getResourcePath(['https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/twitter-bootstrap/','https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/','Bootstrap/bootstrap-'],
             me.getVersion('bootstrap') + '/js/bootstrap' + (/^5/.test(me.getVersion('bootstrap')) ? '.bundle' : '') + (me.isDebug ? '' : '.min')),
 
         ELEMENT: me.getResourcePath(['https://s0.pstatp.com/cdn/expire-1-M/element-ui/', 'https://cdn.bootcdn.net/ajax/libs/element-ui/','ElementUI/element-ui-'],
