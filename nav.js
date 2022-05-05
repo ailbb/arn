@@ -311,7 +311,7 @@
         baseUrl: me.baseURL,
         urlArgs: me.getAppVersion(),
         paths: paths,
-        waitSeconds: 600,
+        waitSeconds: 10,
         map: {
             '*': {
                 'css': 'requireCss'
