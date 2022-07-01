@@ -59,7 +59,9 @@
                 requireCss: config.version.requireCss || '0.1.9',
                 jQuery: config.version.jQuery || '2.1.1',
                 jQuerySlide: config.version.jQuerySlide || '0.6.2',
-                vue: config.version.vue || (~arn.arnCfg.reqLibraries.indexOf('ELEMENTPLUS') ? '3.2.31' : '2.6.10'),
+                vue: ~arn.arnCfg.reqLibraries.indexOf('ELEMENTPLUS') ?
+                    ( (!config.version.vue || /^2/.test(config.version.vue)) ? '3.2.31' : config.version.vue) :
+                    ( (!config.version.vue || /^3/.test(config.version.vue)) ?  '2.6.10' : config.version.vue),
                 bootstrap: config.version.bootstrap || '3.3.5',
                 ELEMENT: config.version.elementUI ||  config.version.ELEMENT || '2.15.0',
                 ELEMENTPLUS: config.version.elementPlus ||  config.version.ELEMENTPLUS || '2.0.4',
