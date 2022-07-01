@@ -59,9 +59,10 @@
                 requireCss: config.version.requireCss || '0.1.9',
                 jQuery: config.version.jQuery || '2.1.1',
                 jQuerySlide: config.version.jQuerySlide || '0.6.2',
-                vue: config.version.vue || '2.6.10',
+                vue: config.version.vue || (~arn.arnCfg.reqLibraries.indexOf('ELEMENTPLUS') ? '3.2.31' : '2.6.10'),
                 bootstrap: config.version.bootstrap || '3.3.5',
                 ELEMENT: config.version.elementUI ||  config.version.ELEMENT || '2.15.0',
+                ELEMENTPLUS: config.version.elementPlus ||  config.version.ELEMENTPLUS || '2.0.4',
                 bootstrapIcons: config.version.bootstrapIcons || '1.5.0',
                 ext: config.version.ext || '6.0.0',
                 d3: config.version.d3 || '3.5.14',
@@ -232,7 +233,10 @@
             alias: ["pdfobject", "PDFObject"]},
         "ELEMENT": {
             globalName: 'ELEMENT',
-            alias: ["elementUI", "ElementUI", "ELEMENT"]}
+            alias: ["elementUI", "ElementUI", "ELEMENT"]},
+        "ELEMENTPLUS": {
+            globalName: 'ELEMENTPLUS',
+            alias: ["elementPlus", "ElementPlus", "ELEMENTPLUS"]}
     };
 
     var paths = {
@@ -254,8 +258,13 @@
         ELEMENT: me.getResourcePath(['https://s0.pstatp.com/cdn/expire-1-M/element-ui/', 'https://cdn.bootcdn.net/ajax/libs/element-ui/','ElementUI/element-ui-'],
             me.getVersion('ELEMENT') + '/index' + (me.isDebug ? '' : '.min')),
 
-        vue: me.getResourcePath(['https://s3.pstatp.com/cdn/expire-1-M/vue/','https://cdn.bootcdn.net/ajax/libs/vue/','Vue/vue-'],
-            me.getVersion('vue') + '/vue' + (me.isDebug ? '' : '.min')),
+        ELEMENTPLUS: me.getResourcePath(['https://s0.pstatp.com/cdn/expire-1-M/element-plus/', 'https://cdn.bootcdn.net/ajax/libs/element-plus/','ElementPlus/element-plus-'],
+            me.getVersion('ELEMENTPLUS') + '/index.full' + (me.isDebug ? '' : '.min')),
+
+        vueSource: me.getResourcePath(['https://s3.pstatp.com/cdn/expire-1-M/vue/','https://cdn.bootcdn.net/ajax/libs/vue/','Vue/vue-'],
+            me.getVersion('vue') + '/vue' +  (/^3/.test(me.getVersion('vue')) ? '.global' : '')  + (me.isDebug ? '' : '.min')),
+
+        vue:  'Vue/vue-transfer',
 
         ext: me.getResourcePath(['https://s2.pstatp.com/cdn/expire-1-M/extjs/', 'https://cdn.bootcdn.net/ajax/libs/extjs/', 'Sencha/ext-'],
             me.getVersion('ext') + '/ext-all' + (me.isDebug ? '-debug' : '')),
@@ -333,6 +342,17 @@
                             'css!https://cdn.bootcdn.net/ajax/libs/element-ui/',
                             'css!/arn/ElementUI/element-ui-'
                         ], me.getVersion('ELEMENT') + '/theme-chalk/index' + (me.isDebug ? '' : '.min')
+                    )
+                )
+            },
+            ELEMENTPLUS: {
+                deps: ['vue'].concat(
+                    me.getResourcePath(
+                        [
+                            'css!https://s0.pstatp.com/cdn/expire-1-M/element-plus/',
+                            'css!https://cdn.bootcdn.net/ajax/libs/element-plus/',
+                            'css!/arn/ElementPlus/element-plus-'
+                        ], me.getVersion('ELEMENTPLUS') + '/index' + (me.isDebug ? '' : '.min')
                     )
                 )
             },

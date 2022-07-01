@@ -15,6 +15,8 @@ define(['vue', 'ELEMENT'], function (Vue, ElementUI) {
         </div>
     `;
 
+    // Vue.use(ELEMENT); // 第一种方式加载ElementUI
+    // ELEMENT.install(Vue); // 第二种方式加载ElementUI
     Vue.use(ElementUI);
 
     var vm = new Vue({

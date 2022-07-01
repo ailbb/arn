@@ -1,7 +1,7 @@
 // Vue 3.0 + ElementPlus
-define(['vue', 'ELEMENT'], function (Vue, ElementUI) {
+define(['vue', 'ELEMENTPLUS'], function (Vue, ElementPlus) {
     document.querySelector('body').innerHTML = `
-        <div id="Vue2_ElementUI" style="width: 500px; height: 300px;">
+        <div id="Vue3_ElementPlus" style="width: 500px; height: 300px;">
     
             <el-row class="mb-4">
                 <el-button>Default</el-button>
@@ -15,19 +15,18 @@ define(['vue', 'ELEMENT'], function (Vue, ElementUI) {
         </div>
     `;
 
-    Vue.use(ElementUI);
-
-    var vm = new Vue({
-        el: '#Vue2_ElementUI',
+    var app = Vue.createApp({
         data: function () {
             return {
                 btnText: "vue-btn"
             }
         },
         mounted() {
-            alert("Vue2 & ElementUI load end！");
+            alert("Vue3 & ElementPlus load end！");
         },
         watch: {},
         methods: {}
-    })
+    });
+    app.use(ElementPlus);
+    app.mount('#Vue3_ElementPlus');
 });

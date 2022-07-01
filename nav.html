@@ -25,6 +25,10 @@
 
     <!--框架end-->
 
+<!--    <link rel="stylesheet" href="/arn/ElementPlus/element-plus-2.0.4/index.css" />-->
+<!--    <script src="/arn/Vue/vue-3.2.31/vue.global.min.js"></script>-->
+<!--    <script src="/arn/ElementPlus/element-plus-2.0.4/index.full.js"></script>-->
+
     <!--框架配置start-->
     <script>
         /**
@@ -63,15 +67,15 @@
                 'eCharts',
                 'highCharts3d',
                 'navfn',
-                'ELEMENT', // elementui强制使用了 'ELEMENT' 作为elementui的全局变量，所以我们在使用时候只能引用他
-                // Vue.use(ELEMENT); // 第一种方式加载ElementUI
-                // ELEMENT.install(Vue); // 第二种方式加载ElementUI
+                // 'ELEMENT', // elementui强制使用了 'ELEMENT' 作为elementui的全局变量，所以我们在使用时候只能引用他
+                'ELEMENTPLUS', // elementui强制使用了 'ELEMENTPLUS' 作为elementplus的全局变量，所以我们在使用时候只能引用他
                 'codemirror',
                 'test.js'
             ],
             reqPlugins: ['bootstrap', 'extLocal', 'highCharts3d', 'jQuerySlide'],
             version: {
-                bootstrap: '5.0.0'
+                bootstrap: '5.0.0',
+                vue: '3.2.31'
             }
         };
     </script>
@@ -80,9 +84,6 @@
 
 </head>
 <body>
-
-<script>
-</script>
 
 </body>
 </html>

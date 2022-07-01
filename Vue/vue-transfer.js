@@ -1,0 +1,1 @@
+define(['vueSource'], function (Vue) { return Vue || window.Vue; });
