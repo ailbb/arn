@@ -1,8 +1,10 @@
-window.AXPlugin = { fastmockId: '', prod: false, prodUrl: '', fastmockUrl: `https://www.fastmock.site/mock/`};
+window.AXPlugin = { el: '#axplugin', elv: '', fastmockId: '', prod: false, prodUrl: '', fastmockUrl: `https://www.fastmock.site/mock/`};
 
 AXPlugin.Vue = function(option){
     var transOption = function(vo){
-        vo.el = $(vo.el).children()[0];
+        let pel = $(vo.el || AXPlugin.el);
+
+        vo.el = pel.children()[0];
 
         AXPlugin.fastmockId = vo.fastmockId;
         AXPlugin.prod = vo.prod; // 生产环境配置
@@ -10,8 +12,7 @@ AXPlugin.Vue = function(option){
         AXPlugin.fastmockUrl = vo.fastmockUrl ? vo.fastmockUrl : AXPlugin.fastmockUrl; // fastmock环境URL
 
         for(key in vo.data) {
-            var parent = $(`[title="${key}"]`);
-            console.log(`[title="${key}"]`);
+            var parent = AXPlugin.fid(key);
             var el = parent.find('input');
             if(!el.length) {
                 el = parent.find('span');
@@ -22,8 +23,10 @@ AXPlugin.Vue = function(option){
         }
         return vo;
     };
-    new Vue(transOption(option));
+    AXPlugin.elv = new Vue(transOption(option));
 };
+
+AXPlugin.fid = function (key){ return $(`[title="${key}"]`); }
 
 AXPlugin.fastmock = function(url, key){
     var data = {};
