@@ -28,12 +28,23 @@
     arn.arnCfg = wd.arnCfg || wd.requireConfig || arn.arnCfg || {};
     arn.arnCfg.mask = arn.arnCfg.mask || {};  // 获取配置项
     arn.nav = arn.nav || {}; // 根据此对象判断require是否正常加载
+    arn.$AFPath = wd.$AFPath = wd.$AFPath || arn.$AFPath ||
+        ((r, ds) => {
+            for(var p of ds) if(r.exec(p)) return p.substring(0, r.exec(p).index - 1);
+            return "";
+        }) (
+            /public|arn|views|module/, (() => {
+                var li = [(document.currentScript || {}).src || location.href];
+                for(ds of document.scripts) { li.push(ds.src); };
+                return li;
+            })()
+        ) || "";
 
     var config = arn.arnCfg = (function (o1, o2) {
             for (var o in o2) o1[o] = o2[o];
             return o1;
         })({
-            AppBase: wd.AppBase || "",
+            $AFPath: arn.$AFPath,
             navScript: wd.navScript,
             baseURL: wd.baseURL,
             reqLibraries: wd.reqLibraries,
@@ -62,11 +73,11 @@
                 jQuerySlide: config.version.jQuerySlide || '0.6.2',
                 vue: ~arn.arnCfg.reqLibraries.indexOf('ELEMENTPLUS') ?
                     ( (!config.version.vue || /^2/.test(config.version.vue)) ? '3.2.31' : config.version.vue) :
-                    ( (!config.version.vue || /^3/.test(config.version.vue)) ?  '2.6.10' : config.version.vue),
+                    ( (!config.version.vue) ?  '3.2.31' : config.version.vue),
                 bootstrap: config.version.bootstrap || '3.3.5',
                 ELEMENT: config.version.elementUI ||  config.version.ELEMENT || '2.15.0',
                 ELEMENTPLUS: config.version.elementPlus ||  config.version.ELEMENTPLUS || '2.0.4',
-                bootstrapIcons: config.version.bootstrapIcons || '1.5.0',
+                bootstrapIcons: config.version.bootstrapIcons || '1.10.0',
                 ext: config.version.ext || '6.0.0',
                 d3: config.version.d3 || '7.3.0',
                 eCharts: config.version.eCharts || '3.1.2',
@@ -105,14 +116,14 @@
                     ELEMENT: ['/arn/ElementUI/element-ui-'],
                     ELEMENTPLUS: ['/arn/ElementPlus/element-plus-'],
                     vueSource: ['/arn/Vue/vue-'],
-                    ext: [ '/arn/Sencha/ext-'],
-                    extLocal: [ '/arn/Sencha/ext-'],
-                    d3: [ '/arn/D3/d3-'],
-                    eCharts: [ '/arn/Echarts/echarts-'],
-                    highCharts: [ '/arn/Highcharts/highcharts-'],
-                    highCharts3d: [ '/arn/Highcharts/highcharts-'],
-                    codemirror: [ '/arn/Codemirror/codemirror-'],
-                    pdfobject: [ '/arn/PDFobject/pdfobject-'],
+                    ext: ['/arn/Sencha/ext-'],
+                    extLocal: ['/arn/Sencha/ext-'],
+                    d3: ['/arn/D3/d3-'],
+                    eCharts: ['/arn/Echarts/echarts-'],
+                    highCharts: ['/arn/Highcharts/highcharts-'],
+                    highCharts3d: ['/arn/Highcharts/highcharts-'],
+                    codemirror: ['/arn/Codemirror/codemirror-'],
+                    pdfobject: ['/arn/PDFobject/pdfobject-'],
                     bootstrapIcons: ['/arn/Bootstrap-icons/']
                 }
             },
@@ -173,7 +184,7 @@
                     CDNList = this.RequestLink.CDN[name];
                 }
 
-                return CDNList.concat(LANList.map(r => arn.arnCfg.AppBase + r)).map(r=> (type || '') + r);
+                return CDNList.concat(LANList.map(r => arn.arnCfg.$AFPath + r)).map(r=> (type || '') + r);
             },
 
             getResourcePath: function (li, file){
@@ -239,6 +250,8 @@
                 return _this.ajaxGet((_this.versionURL || _this.baseURL + "version.json") + "?" + new Date().getTime(), false) || "";
             }
         };
+
+    // config.reqLibraries = config.reqLibraries.map(n=> (!n.endsWith(".js") || n.includes("/")) ? n : (location.href.substring(0, location.href.lastIndexOf("/")+1)+n));
 
     // 后读取链接
     me.CDN = me.queryString.match('(\\?|&)cdn') !== null || arn.arnCfg.CDN;

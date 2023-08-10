@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>b map demo</title>
+
+<!--    <base href="">-->
+
+    <script>
+        /*注释：*/
+        /**
+         * Load the library located at the same path with this file
+         *
+         * Will automatically load ext-all-debug.js if any of these conditions is true:
+         *  - Current hostname is localhost
+         *  - Current hostname is an IP v4 address
+         *  - Current protocol is "file:"
+         *  - Query string has `debug` parameter passed (http://foo/test.html?debug)
+         *
+         * If none of the above is true or the `nodebug` query string parameter is present (http://foo/test.html?nodebug),
+         * ext-all.js will be loaded.
+         */
+    </script>
+
+    <!--声明-->
+    <!--ExtJs适应mobile声明-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--END-->
+
+    <!--jQuery-JavaScript辅助库-->
+    <!--<script src="JQuery/jquery-2.1.1/jquery.js"></script>-->
+    <script src="../../JQuery/jquery-2.1.1/jquery.min.js"></script>
+    <!--END-->
+
+    <!--ExtJs-富客户端框架-->
+    <link rel="stylesheet" href="../../BMap/js/extjs/resources/ext-theme-classic/ext-theme-classic-all.css"/>
+    <script src="../../BMap/js/extjs/ext-all.js"></script>
+    <!--END-->
+
+    <style>
+        html, body{
+            height: 100%;
+        }
+    </style>
+
+    <script>
+        var APPBASE = "";
+
+        Ext.onReady(function(){
+            Ext.Loader.setConfig({
+                enabled : true,
+                scriptCharset : 'utf-8',
+                disableCaching : false,
+                paths : { MyApp: "BMap/js/MyApp" }
+            });
+            // Ext.require('MyApp.util.Common');
+            // Ext.require('MyApp.map.Map');
+
+            Ext.create('MyApp.map.Panel', {
+                width: '100%',
+                height: '100%',
+                renderTo: Ext.getBody(),
+            });
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

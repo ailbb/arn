@@ -25,7 +25,7 @@ setTimeout(function(){
         methods: {
             doeval(){
                 this.result = eval(this.X+this.o+this.Y);
-                this.projecttitle = AXPlugin.fastmock('/brd-cloud/ecs/getInstances', 'data');
+                this.projecttitle = AXPlugin.fastmock('/bmap-cloud/ecs/getInstances', 'data');
                 console.log(this.projecttitle);
             }
         },
