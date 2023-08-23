@@ -78,6 +78,8 @@
                 ELEMENT: config.version.elementUI ||  config.version.ELEMENT || '2.15.0',
                 ELEMENTPLUS: config.version.elementPlus ||  config.version.ELEMENTPLUS || '2.0.4',
                 bootstrapIcons: config.version.bootstrapIcons || '1.10.0',
+                mdbUiKit: config.version.mdbUiKit || '6.2.0',
+                fontAwesome: config.version.fontAwesome || '6.0.0',
                 ext: config.version.ext || '6.0.0',
                 d3: config.version.d3 || '7.3.0',
                 eCharts: config.version.eCharts || '3.1.2',
@@ -105,7 +107,9 @@
                     highCharts3d: ['https://s3.pstatp.com/cdn/expire-1-M/highcharts/', 'https://cdn.bootcdn.net/ajax/libs/highcharts/'],
                     codemirror: ['https://cdn.bootcdn.net/ajax/libs/codemirror/', 'https://s2.pstatp.com/cdn/expire-1-M/codemirror/'],
                     pdfobject: ['https://cdn.bootcdn.net/ajax/libs/pdfobject/', 'https://s2.pstatp.com/cdn/expire-1-M/pdfobject/'],
-                    bootstrapIcons: ['https://cdn.bootcdn.net/ajax/libs/bootstrap-icons/']
+                    bootstrapIcons: ['https://cdn.bootcdn.net/ajax/libs/bootstrap-icons/'],
+                    mdbUiKit: ['https://cdn.bootcdn.net/ajax/libs/mdb-ui-kit/'],
+                    fontAwesome: ['https://cdn.bootcdn.net/ajax/libs/font-awesome/']
                 },
                 LAN: {
                     requireCss: ['/arn/RequireJS/require-css-'],
@@ -124,7 +128,9 @@
                     highCharts3d: ['/arn/Highcharts/highcharts-'],
                     codemirror: ['/arn/Codemirror/codemirror-'],
                     pdfobject: ['/arn/PDFobject/pdfobject-'],
-                    bootstrapIcons: ['/arn/Bootstrap-icons/']
+                    bootstrapIcons: ['/arn/Bootstrap-icons/'],
+                    mdbUiKit: ['/arn/mdbUiKit/mdbuikit-'],
+                    fontAwesome: ['/arn/FontAwesome/font-awesome-']
                 }
             },
             style: {
@@ -319,6 +325,8 @@
         jQuerySlide: me.getResourcePath(me.getRequestLinks('jQuerySlide'), me.getVersion('jQuerySlide') + '/jquery.superslides' + (me.isDebug ? '' : '.min')),
         moment: me.getResourcePath(me.getRequestLinks('moment'), me.getVersion('moment') + '/moment' + (me.isDebug ? '' : '.min')),
         bootstrap: me.getResourcePath(me.getRequestLinks('bootstrap'), me.getVersion('bootstrap') + '/js/bootstrap' + (/^5/.test(me.getVersion('bootstrap')) ? '.bundle' : '') + (me.isDebug ? '' : '.min')),
+        mdbUiKit: me.getResourcePath(me.getRequestLinks('mdbUiKit'), me.getVersion('mdbUiKit') + '/js/mdb' + (me.isDebug ? '' : '.min')),
+        fontAwesome: me.getResourcePath(me.getRequestLinks('fontAwesome'), me.getVersion('fontAwesome') + '/js/all' + (me.isDebug ? '' : '.min')),
         ELEMENT: me.getResourcePath(me.getRequestLinks('ELEMENT'),  me.getVersion('ELEMENT') + '/index' + (me.isDebug ? '' : '.min')),
         ELEMENTPLUS: me.getResourcePath(me.getRequestLinks('ELEMENTPLUS'), me.getVersion('ELEMENTPLUS') + '/index.full' + (me.isDebug ? '' : '.min')),
         vueSource: me.getResourcePath(me.getRequestLinks('vueSource'), me.getVersion('vue') + '/vue' +  (/^3/.test(me.getVersion('vue')) ? '.global' : '')  + (me.isDebug ? '' : '.min')),
@@ -406,6 +414,20 @@
                             []
                     )
                 )
+            },
+            mdbUiKit: {
+                deps: ['fontAwesome'].concat(
+                    me.getResourcePath(
+                        me.getRequestLinks('mdbUiKit', 'css!'),
+                        me.getVersion('mdbUiKit') + '/css/mdb' + (me.isDebug ? '' : '.min')
+                    )
+                )
+            },
+            fontAwesome: {
+                deps: me.getResourcePath(
+                        me.getRequestLinks('fontAwesome', 'css!'),
+                        me.getVersion('fontAwesome') + '/css/all' + (me.isDebug ? '' : '.min')
+                    )
             },
             ext: {
                 deps: me.getResourcePath(
