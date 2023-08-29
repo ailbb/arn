@@ -82,8 +82,9 @@
                 fontAwesome: config.version.fontAwesome || '6.0.0',
                 ext: config.version.ext || '6.0.0',
                 d3: config.version.d3 || '7.3.0',
-                eCharts: config.version.eCharts || '3.1.2',
+                eCharts: config.version.eCharts || '5.3.0',
                 highCharts: config.version.highCharts || '4.1.5',
+                echartsPluginsArn: config.version.echartsPluginsArn || '1.0.0',
                 moment: config.version.moment || '2.13.0',
                 codemirror: config.version.codemirror || '5.50.0',
                 pdfobject: config.version.pdfobject || '2.2.4',
@@ -130,7 +131,8 @@
                     pdfobject: ['/arn/PDFobject/pdfobject-'],
                     bootstrapIcons: ['/arn/Bootstrap-icons/'],
                     mdbUiKit: ['/arn/mdbUiKit/mdbuikit-'],
-                    fontAwesome: ['/arn/FontAwesome/font-awesome-']
+                    fontAwesome: ['/arn/FontAwesome/font-awesome-'],
+                    echartsPluginsArn: ['/arn/echartsPluginsArn/echarts-plugins-arn-']
                 }
             },
             style: {
@@ -327,6 +329,7 @@
         bootstrap: me.getResourcePath(me.getRequestLinks('bootstrap'), me.getVersion('bootstrap') + '/js/bootstrap' + (/^5/.test(me.getVersion('bootstrap')) ? '.bundle' : '') + (me.isDebug ? '' : '.min')),
         mdbUiKit: me.getResourcePath(me.getRequestLinks('mdbUiKit'), me.getVersion('mdbUiKit') + '/js/mdb' + (me.isDebug ? '' : '.min')),
         fontAwesome: me.getResourcePath(me.getRequestLinks('fontAwesome'), me.getVersion('fontAwesome') + '/js/all' + (me.isDebug ? '' : '.min')),
+        echartsPluginsArn: me.getResourcePath(me.getRequestLinks('echartsPluginsArn'), me.getVersion('echartsPluginsArn') + '/all' + (me.isDebug ? '' : '.min')),
         ELEMENT: me.getResourcePath(me.getRequestLinks('ELEMENT'),  me.getVersion('ELEMENT') + '/index' + (me.isDebug ? '' : '.min')),
         ELEMENTPLUS: me.getResourcePath(me.getRequestLinks('ELEMENTPLUS'), me.getVersion('ELEMENTPLUS') + '/index.full' + (me.isDebug ? '' : '.min')),
         vueSource: me.getResourcePath(me.getRequestLinks('vueSource'), me.getVersion('vue') + '/vue' +  (/^3/.test(me.getVersion('vue')) ? '.global' : '')  + (me.isDebug ? '' : '.min')),
@@ -425,9 +428,13 @@
             },
             fontAwesome: {
                 deps: me.getResourcePath(
-                        me.getRequestLinks('fontAwesome', 'css!'),
-                        me.getVersion('fontAwesome') + '/css/all' + (me.isDebug ? '' : '.min')
-                    )
+                    me.getRequestLinks('fontAwesome', 'css!'),
+                    me.getVersion('fontAwesome') + '/css/all' + (me.isDebug ? '' : '.min')
+                )
+            },
+            echartsPluginsArn: {
+                deps: ['eCharts'],
+                exports: 'epa'
             },
             ext: {
                 deps: me.getResourcePath(
