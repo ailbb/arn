@@ -3,7 +3,6 @@ var baseSrc = document.currentScript.src.substring(0, document.currentScript.src
 define(['eCharts','moment',
     baseSrc+"charts-component.js",
     baseSrc+"charts-component-3dbar.js",
-    baseSrc+"charts-component-4dbar.js",
     baseSrc+"charts-component-bar.js",
     baseSrc+"charts-component-line.js",
     baseSrc+"charts-component-line-total.js",
@@ -11,7 +10,6 @@ define(['eCharts','moment',
 ], function (echarts,moment,
              chartCommon,
              chart3dBar,
-             chart4dBar,
              chartBar,
              chartLine,
              chartLineTotal,
@@ -24,7 +22,6 @@ define(['eCharts','moment',
     let component =  {
         chartCommon: chartCommon,
         chart3dBar: chart3dBar,
-        chart4dBar: chart4dBar,
         chartBar: chartBar,
         chartLine: chartLine,
         chartLineTotal: chartLineTotal,
@@ -43,14 +40,6 @@ define(['eCharts','moment',
         },
         draw3dBar(el, overwrite_option) { // 绘图
             var c = this.chart3dBar.draw(...arguments);
-            this.vm = c.vm || this.vm;
-            this.myChart = c.myChart || this.myChart;
-            this.getOption = c.getOption || this.getOption;
-            this.resize = c.resize || this.resize;
-            return c;
-        },
-        draw4dBar(el, overwrite_option) { // 绘图
-            var c = this.chart4dBar.draw(...arguments);
             this.vm = c.vm || this.vm;
             this.myChart = c.myChart || this.myChart;
             this.getOption = c.getOption || this.getOption;

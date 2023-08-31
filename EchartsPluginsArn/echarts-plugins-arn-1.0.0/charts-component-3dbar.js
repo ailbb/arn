@@ -4,7 +4,8 @@ define(['eCharts','moment'], function (echarts,moment){
 
     // 组件的配置
     let option =  {
-        backgroundColor: '#FFF00',
+        // backgroundColor: '#FFF00',
+        backgroundColor: '#FFF',
         title: {
             text: '单位/GB',
             textStyle:{
@@ -35,7 +36,7 @@ define(['eCharts','moment'], function (echarts,moment){
         },
         legend: {
             // right: 0,
-            data: ['3G语音采集量', '3G数据采集量']
+            data: ['图例1', '图例2']
         },
         xAxis: {
             data: [],
@@ -72,7 +73,8 @@ define(['eCharts','moment'], function (echarts,moment){
             },
             axisLabel: {
                 textStyle: {
-                    color: '#fff',
+                    color: '#757272',
+                    // color: '#fff',
                     fontSize: 12
                 },
             }
@@ -91,16 +93,13 @@ define(['eCharts','moment'], function (echarts,moment){
                         // 柱子未使用的顶端帽子的渐变色
                         return !ok ? new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
                             offset: 0,
-                            color: '#8C321500' // 0% 处的颜色
+                            color: 'rgba(247,183,51,0.3)' // 0% 处的颜色
                         }, {
-                            offset: 0.49,
-                            color: '#8C321500' // 0% 处的颜色
-                        }, {
-                            offset: 0.61,
-                            color: '#F7B733' // 50% 处的颜色
+                            offset: 0.6,
+                            color: 'rgba(221,123,27,0.9)' // 50% 处的颜色
                         }, {
                             offset: 1,
-                            color:  '#F7B733'// 100% 处的颜色
+                            color:  '#DD7B1B'// 100% 处的颜色
                         }], false) : new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
                             offset: 0,
                             color: '#1176C800' // 0% 处的颜色
@@ -112,7 +111,7 @@ define(['eCharts','moment'], function (echarts,moment){
                             color:  '#1176C8'// 100% 处的颜色
                         }], false);
                     },
-                    opacity:0.7,
+                    opacity:1,
                 },
                 "data": [1,1,1,1,1]
             },
@@ -153,62 +152,61 @@ define(['eCharts','moment'], function (echarts,moment){
                 stack: '广告',
                 itemStyle: {
                     color: 'transparent'
+                    // color: 'rgba(255,231,220,0.52)' // 0% 处的颜色
                 },
                 data: []
             },
             {
+                // 未使用的柱子帽子颜色
                 "name": "", //头部
                 "type": "pictorialBar",
                 "symbolSize": [45, 25],
-                "symbolOffset": [0, -10],
+                "symbolOffset": [0, 0],
                 "z": 12,
                 "symbolPosition": "end",
                 itemStyle:{
+                    opacity:0.85,
                     color: function(params){
                         var a = params.name.slice(0,2);
                         var ok = -1 == OPTION_STATIC.yellowName.indexOf(params.name);
                         // 柱子未使用的顶端帽子的渐变色
                         return !ok ? new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
                             offset: 0,
-                            color: '#8C3215' // 0% 处的颜色
+                            color: 'rgba(140,50,21,0.33)' // 0% 处的颜色
                         }, {
                             offset: 1,
-                            color:  '#DD7B1B'// 100% 处的颜色
+                            color:  'rgba(221,123,27,0.33)'// 100% 处的颜色
                         }], false) : new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
                             offset: 0.33,
-                            color: '#1173C2' // 0% 处的颜色
+                            color: 'rgba(17,115,194,0.33)' // 0% 处的颜色
                         }, {
                             offset: 0.44,
-                            color: '#1C69BF' // 0% 处的颜色
+                            color: 'rgba(28,105,191,0.33)' // 0% 处的颜色
                         }, {
                             offset: 0.45,
-                            color: '#1D68BF' // 0% 处的颜色
+                            color: 'rgba(29,104,191,0.33)' // 0% 处的颜色
                         }, {
                             offset: 0.31,
-                            color:  '#1176C8'// 100% 处的颜色
+                            color:  'rgba(17,118,200,0.33)'// 100% 处的颜色
                         }], false);
-                    },
-                    opacity:0.85,
+                    }
                 },
                 "data": [],
                 label: {
                     show: true, //开启显示
                     position: 'top', //在上方显示
                     textStyle: { //数值样式
-                        color: '#00FFC4',
-                        fontSize: 16
+                        // color: '#00FFC4',
+                        color: '#16c099',
+                        fontSize: 14
                     },
                     formatter: (params)=>{
-                        // if(params.dataIndex === 0){
-                        //     return '{c|'+params.value+'}\n{a|'+params.seriesName+'}';
-                        // }else{
-                        //     return '';
-                        // }
-                        return (component.myChart['#chart-bar2'].getOption().series[0].data[params.dataIndex] / params.value *100).toFixed(2) + '%';
+                        return (option.series[0].data[params.dataIndex] / params.value *100).toFixed(2) + '%';
                     }
                 },
             },
             {
+                // 已使用的柱子帽子颜色
                 "name": "",
                 "type": "pictorialBar",
                 "symbolSize": [45, 25],
@@ -242,6 +240,7 @@ define(['eCharts','moment'], function (echarts,moment){
                 "data": []
             },
             {
+                // 未使用的柱子颜色
                 name: 'x',
                 type: 'bar',
                 barWidth: 45,
@@ -305,19 +304,19 @@ define(['eCharts','moment'], function (echarts,moment){
 
             _option.xAxis.data = _chartsData.xAxisData; // 设置图表的x轴
 
-            _option.title.text = overwrite_option.unit; // 单位信息
-            OPTION_STATIC.yellowName = overwrite_option.yellowName; // 单位信息
+            _option.title.text = overwrite_option.unit || ""; // 单位信息
+            if(!overwrite_option.yellowName) {
+                overwrite_option.yellowName = []
+                _chartsData.seriesAvg.forEach((s,i)=> {
+                    if(s/_chartsData.seriesCfg[i]>0.6) overwrite_option.yellowName.push(_chartsData.xAxisData[i]);
+                })
+            }
+            OPTION_STATIC.yellowName = overwrite_option.yellowName; // 图例信息
             return _option;
         },
         cloneOption(_option){ return Object.assign({}, _option); },
         /**
          * 加工结果数据为图表数据
-         * @param resultData = [{
-							name: '曲线通幽处，禅房花木深1', // 展示的名称
-							data: {
-								'00:00': 1.2345 // 时间：当前时间的值
-							},
-						}]
          * @returns {{legend: [], series: [], time: []}}
          {
 							legend: [], // 图表的展示数据
@@ -328,60 +327,6 @@ define(['eCharts','moment'], function (echarts,moment){
         encodeChartData(resultData, filteData, dim, overwrite_option){ // 将当前的结果集数据，转换为图表数据
             if(resultData.xAxisData) return resultData;
             let xAxisData=[], legendData=[], series=[], i=0;
-            // overwrite_option = overwrite_option || {};
-            // let color = overwrite_option.color || ["#52C41A00","#697DFF00"];
-            // let lineColor = overwrite_option.lineColor || ["#53C0EF","#43BC72"];
-            // let areaColor = overwrite_option.areaColor || {
-            //     0: ["#53C0EF","#010b13"],
-            //     1: ["#52C41A00","#52C41A00"]
-            // };
-            //
-            // for(let k in resultData) { // 循环结果数据
-            //     let rows = resultData[k];
-            //
-            //     // if(filteData && -1 == filteData.indexOf(rows.name)) continue;
-            //
-            //     let serie = {
-            //         name: ['已使用', '总量'][k],
-            //         type: 'line',
-            //         stack: overwrite_option.stack || '',
-            //         symbolSize: 20,
-            //         data: this.formatRowData(rows.map(r=>r.y)),
-            //         areaStyle: {
-            //             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            //                 {
-            //                     offset: 0,
-            //                     color: areaColor[k][0]
-            //                 },
-            //                 {
-            //                     offset: 0.75,
-            //                     color: areaColor[k][1]
-            //                 }
-            //             ])
-            //         },
-            //         emphasis: {
-            //             focus: 'series'
-            //         },
-            //         "itemStyle" : {
-            //             "normal" : {
-            //                 "color": color[k], //改变折线点的颜色
-            //                 "lineStyle":{
-            //                     "color": lineColor[k], //改变折线颜色
-            //                     "width": 2
-            //                 }
-            //             }
-            //         }
-            //
-            //     };
-            //
-            //     legendData.push(['已使用','总量'][k]); // push图表的X轴
-            //     xAxisData = rows.map(r=>r.x); // time是x轴
-            //     //处理时间格式
-            //     for(var j=0;j<xAxisData.length;j++){
-            //         xAxisData[j]=moment(xAxisData[j]).format(dim < 2 ? "HH:mm" : 'MM/DD')
-            //     }
-            //     series.push(serie); // 绘图的数据
-            // }
 
             return {xAxisData, legendData, series};
         },
@@ -405,6 +350,16 @@ define(['eCharts','moment'], function (echarts,moment){
         compress(v) {
             let t = v/1024;
             return t > 300 ? arguments.callee(t) : t;
+        },
+        getDemoData(){
+            let d1 = {
+                legendData: ['已使用', '未使用'],
+                xAxisData: ["A角色","B角色","C角色","D角色"],
+                seriesAvg:  [55, 44, 33, 66],
+                seriesCfg:  [100, 100, 100, 100],
+            };
+            console.info("DemoData-1:\n"+JSON.stringify(d1));
+            return d1;
         }
     };
 
@@ -417,6 +372,7 @@ define(['eCharts','moment'], function (echarts,moment){
         encodeChartData: component.encodeChartData,
         draw: component.draw,
         resize: component.resize,
-        formatRowData: component.formatRowData
+        formatRowData: component.formatRowData,
+        getDemoData: component.getDemoData
     };
 });

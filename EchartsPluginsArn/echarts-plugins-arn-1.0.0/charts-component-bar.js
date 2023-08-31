@@ -2,6 +2,9 @@
 define(['eCharts','moment'], function (echarts,moment){
     // 组件的配置
     let option = {
+        colorPicker: ['#d7e5f3','#0c6fc6','#0db765','#e1ba43',
+            '#e14343','#ac43e1','#ffe925','#ff25a8'
+            ,'#25ff7c','#967200','#0d692b','#3b3314'],
         backgroundColor: '',
         title: {
             text: '数量/个',
@@ -75,24 +78,50 @@ define(['eCharts','moment'], function (echarts,moment){
         vm: {},
         myChart: {},
         getOption(_chartsData, overwrite_option){
-            let _option = this.cloneOption(option);
-            _option.series[0].data = _chartsData.series; // 设置图表的数据
-            _option.xAxis.data = _chartsData.xAxisData; // 设置图表的x轴
+            let _this = this, _option = this.cloneOption(option);
+            if(_chartsData.constructor == Object) {
+                _option.series[0].name = _chartsData.name || ""; // 设置图表的数据
+
+                if(typeof _chartsData.series[0] == "number")
+                    _option.series[0].data = _chartsData.seriesData || _chartsData.series; // 设置图表的数据
+                else
+                    _option.series = _chartsData.series;
+
+                _option.xAxis.data = _chartsData.xAxisData; // 设置图表的x轴
+            } else {
+                _option.xAxis.data = _chartsData[0].xAxisData;
+                _option.series = _chartsData.map((r,i)=>{
+                    return r.series && (typeof r.series[0] == "number") ? {
+                        data: r.series,
+                        name: r.name,
+                        type: 'bar',
+                        itemStyle: {
+                            normal: {
+                                color: _option.colorPicker[i]
+                            }
+                        }
+                    }: r.series;
+                })
+            }
             return _option;
         },
         cloneOption(_option){ return Object.assign({}, _option); },
         encodeChartData(resultData, filteData, dim, overwrite_option){ // 将当前的结果集数据，转换为图表数据
             if(resultData.xAxisData) return resultData;
 
-            let xAxisData=[], legendData=[], series=[], i=0;
-
-            return {xAxisData, legendData, series};
+            return resultData.map(r=> {
+                    return {
+                        name: r.name || "",
+                        xAxisData: r.xAxisData || r.seriesData.map(c=>c.x),
+                        series: r.series || r.seriesData.map(c=>c.y),
+                    }
+                });
         },
         draw(el, resultData, filteData, dim, overwrite_option) { // 绘图
             let _this = this;4
 
             function autoZoom(){
-                var zoom = parseFloat(getComputedStyle(document.querySelector('.auto-zoom')).getPropertyValue('zoom')), _el = $(el)[0], canvas = $(el)[0].childNodes[0].childNodes[0];
+                var zoom = 1, _el = $(el)[0], canvas = $(el)[0].childNodes[0].childNodes[0];
                 $(canvas).width(parseInt(1/zoom*_el.clientWidth) + 'px')
                 $(canvas).height(parseInt(1/zoom*_el.clientHeight)+ 'px');
                 $(canvas).css('transformOrigin', '0 0');
@@ -119,6 +148,33 @@ define(['eCharts','moment'], function (echarts,moment){
         compress(v) {
             let t = v/1024;
             return t > 300 ? arguments.callee(t) : t;
+        },
+        getDemoData(){
+            var list = [];
+            for(var j=0;j<4;j++) { // 2个图例
+                list.push({
+                    name: "图例"+(j+1),
+                    seriesData: [],
+                });
+                for(var i=7;i--;) {
+                    list[j].seriesData.push({
+                        x: moment().subtract(i, 'day').format('MM/DD'),
+                        y: Math.round(Math.random()*100)
+                    });
+                }
+            }
+
+            let d1 = {
+                legendData: ["图例1","图例2","图例3","图例4","图例5","图例6","图例7"],
+                xAxisData: ["8/21","8/22","8/23","8/24","8/25","8/26","8/27",],
+                series:  [120, 200, 150, 80, 70, 110, 130],
+            };
+            console.info("DemoData-1:\n"+JSON.stringify(d1));
+            // return d1;
+
+            console.info("DemoData-2:\n"+JSON.stringify(list));
+            return list;
+
         }
     };
 
@@ -131,6 +187,7 @@ define(['eCharts','moment'], function (echarts,moment){
         encodeChartData: component.encodeChartData,
         draw: component.draw,
         resize: component.resize,
-        formatRowData: component.formatRowData
+        formatRowData: component.formatRowData,
+        getDemoData: component.getDemoData
     };
 });

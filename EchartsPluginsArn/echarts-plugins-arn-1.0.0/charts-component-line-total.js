@@ -23,7 +23,7 @@ define(['eCharts','moment'], function (echarts,moment){
         },
         legend: {
             // right: 0,
-            data: ['3G语音采集量', '3G数据采集量']
+            data: ['图例1', '图例2']
         },
         xAxis: {
             type: 'category',
@@ -48,7 +48,7 @@ define(['eCharts','moment'], function (echarts,moment){
         },
         series: [
             {
-                name: '3G语音采集量',
+                name: '图例1',
                 data: [150, 230, 224, 218, 135, 147, 260],
                 type: 'line',
                 lineStyle: {
@@ -56,7 +56,7 @@ define(['eCharts','moment'], function (echarts,moment){
                 }
             },
             {
-                name: '3G数据采集量',
+                name: '图例2',
                 data: [120, 240, 254, 208, 105, 137, 210],
                 type: 'line',
                 lineStyle: {
@@ -110,7 +110,7 @@ define(['eCharts','moment'], function (echarts,moment){
                 // if(filteData && -1 == filteData.indexOf(rows.name)) continue;
 
                 let serie = {
-                    name: ['总量', '已使用'][k],
+                    name: ['已使用', '总量'][k],
                     type: 'line',
                     symbolSize: 10,
                     stack: overwrite_option.stack || '',
@@ -177,6 +177,20 @@ define(['eCharts','moment'], function (echarts,moment){
             if(!option.isCompress) return v || 0;
             let t = v/1024;
             return t > 1000 ? arguments.callee(t) : t;
+        },
+        getDemoData(){
+            var list = [];
+            for(var j=0;j<2;j++) { // 2个图例
+                list.push([]);
+                for(var i=48;i--;) {
+                    list[j].push({
+                        x: new Date((new Date().getTime() - i*60*60*1000)),
+                        y: !j ? Math.random()*100 : 100
+                    });
+                }
+            }
+            console.info("DemoData-1:\n"+JSON.stringify(list));
+            return list;
         }
     };
 
@@ -189,6 +203,7 @@ define(['eCharts','moment'], function (echarts,moment){
         encodeChartData: component.encodeChartData,
         draw: component.draw,
         resize: component.resize,
-        formatRowData: component.formatRowData
+        formatRowData: component.formatRowData,
+        getDemoData: component.getDemoData
     };
 });

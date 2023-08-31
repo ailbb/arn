@@ -140,12 +140,12 @@ define(['eCharts','moment'], function (echarts,moment){
                 // if(filteData && -1 == filteData.indexOf(rows.name)) continue;
 
                 let serie = {
-                    name: (overwrite_option.serieName || ['采集量', '剩余量'])[k],
+                    name: (overwrite_option.serieName || ['图例1', '图例2'])[k],
                     type: 'line',
                     stack: overwrite_option.stack || '',
                     symbolSize: 1,
                     data: this.formatRowData(rows.map(r=>r.y)),
-                    areaStyle: overwrite_option.noAreaStyle ? null : {
+                    areaStyle: overwrite_option.noAreaStyle ? null : (overwrite_option.areaStyle ? {
                         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                             {
                                 offset: 0,
@@ -156,7 +156,7 @@ define(['eCharts','moment'], function (echarts,moment){
                                 color: areaColor[k][1]
                             }
                         ])
-                    },
+                    } : null),
                     emphasis: {
                         focus: 'series'
                     },
@@ -218,6 +218,20 @@ define(['eCharts','moment'], function (echarts,moment){
             if(!option.isCompress) return v || 0;
             let t = v/1024;
             return t > 1000 ? arguments.callee(t) : t;
+        },
+        getDemoData(){
+            var list = [];
+            for(var j=0;j<2;j++) { // 2个图例
+                list.push([]);
+                for(var i=48;i--;) {
+                    list[j].push({
+                        x: new Date((new Date().getTime() - i*60*60*1000)),
+                        y: Math.random()*100
+                    });
+                }
+            }
+            console.info("DemoData-1:\n"+JSON.stringify(list));
+            return list;
         }
     };
 
@@ -230,6 +244,7 @@ define(['eCharts','moment'], function (echarts,moment){
         encodeChartData: component.encodeChartData,
         draw: component.draw,
         resize: component.resize,
-        formatRowData: component.formatRowData
+        formatRowData: component.formatRowData,
+        getDemoData: component.getDemoData
     };
 });
