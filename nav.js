@@ -68,26 +68,27 @@
             library: {},
             // cfg - 1
             versions: {
-                requireCss: config.version.requireCss || '0.1.9',
-                jQuery: config.version.jQuery || '2.1.1',
+                // Update Time 2023-09-04
+                requireCss: config.version.requireCss || '0.1.10',
+                jQuery: config.version.jQuery || '3.7.1',
                 jQuerySlide: config.version.jQuerySlide || '0.6.2',
                 vue: ~arn.arnCfg.reqLibraries.indexOf('ELEMENTPLUS') ?
                     ( (!config.version.vue || /^2/.test(config.version.vue)) ? '3.2.31' : config.version.vue) :
-                    ( (!config.version.vue) ?  '3.2.31' : config.version.vue),
-                bootstrap: config.version.bootstrap || '3.3.5',
-                ELEMENT: config.version.elementUI ||  config.version.ELEMENT || '2.15.0',
-                ELEMENTPLUS: config.version.elementPlus ||  config.version.ELEMENTPLUS || '2.0.4',
+                    ( (!config.version.vue) ?  '3.2.31' : config.version.vue), // 没更新，最新版本3.2.41
+                bootstrap: config.version.bootstrap || '5.3.1',
+                ELEMENT: config.version.elementUI ||  config.version.ELEMENT || '2.15.0', // 没更新，最新版本2.15.14
+                ELEMENTPLUS: config.version.elementPlus ||  config.version.ELEMENTPLUS || '2.0.4', // 没更新，最新版本2.3.3
                 bootstrapIcons: config.version.bootstrapIcons || '1.10.0',
                 mdbUiKit: config.version.mdbUiKit || '6.2.0',
                 fontAwesome: config.version.fontAwesome || '6.0.0',
-                ext: config.version.ext || '6.0.0',
-                d3: config.version.d3 || '7.3.0',
-                eCharts: config.version.eCharts || '5.3.0',
-                highCharts: config.version.highCharts || '4.1.5',
-                echartsPluginsArn: config.version.echartsPluginsArn || '1.0.0',
-                moment: config.version.moment || '2.13.0',
-                codemirror: config.version.codemirror || '5.50.0',
-                pdfobject: config.version.pdfobject || '2.2.4',
+                ext: config.version.ext || '6.0.0', // 没更新
+                d3: config.version.d3 || '7.8.4',
+                eCharts: config.version.eCharts || '5.4.2',
+                highCharts: config.version.highCharts || '10.3.3',
+                echartsPluginsArn: config.version.echartsPluginsArn || '1.0.0', // 没更新
+                moment: config.version.moment || '2.29.4',
+                codemirror: config.version.codemirror || '5.50.0', // 没更新
+                pdfobject: config.version.pdfobject || '2.2.4', // 没更新
             },
             // cfg - 2
             RequestLink: {
@@ -449,7 +450,11 @@
             d3: { exports: 'd3' },
             eCharts: { exports: 'echarts' },
             highCharts: {
-                deps: ['jQuery'],
+                deps: ['jQuery'].comcat(
+                    me.getResourcePath(
+                        me.getRequestLinks('highCharts', 'css!'),
+                        me.getVersion('highCharts') + '/highcharts' + (me.isDebug ? '' : '.min'))
+                    ), // 编码插件
                 exports: 'Highcharts'
             },
             highCharts3d: {
