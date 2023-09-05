@@ -1,11 +1,11 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: https://codemirror.net/LICENSE
+// Distributed under an MIT license: https://codemirror.net/5/LICENSE
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
-    mod(require("../../codemirror"), require("../css/css"));
+    mod(require("../../lib/codemirror"), require("../css/css"));
   else if (typeof define == "function" && define.amd) // AMD
-    define(["../../codemirror", "../css/css"], mod);
+    define(["../../lib/codemirror", "../css/css"], mod);
   else // Plain browser env
     mod(CodeMirror);
 })(function(CodeMirror) {
@@ -231,7 +231,7 @@ CodeMirror.defineMode("sass", function(config) {
       }
 
       if(ch === "@"){
-        if(stream.match(/@extend/)){
+        if(stream.match('@extend')){
           if(!stream.match(/\s*[\w]/))
             dedent(state);
         }
@@ -445,7 +445,12 @@ CodeMirror.defineMode("sass", function(config) {
 
     indent: function(state) {
       return state.scopes[0].offset;
-    }
+    },
+
+    blockCommentStart: "/*",
+    blockCommentEnd: "*/",
+    lineComment: "//",
+    fold: "indent"
   };
 }, "css");
 

@@ -1,14 +1,14 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: https://codemirror.net/LICENSE
+// Distributed under an MIT license: https://codemirror.net/5/LICENSE
 
 // By the Neo4j Team and contributors.
 // https://github.com/neo4j-contrib/CodeMirror
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
-    mod(require("../../codemirror"));
+    mod(require("../../lib/codemirror"));
   else if (typeof define == "function" && define.amd) // AMD
-    define(["../../codemirror"], mod);
+    define(["../../lib/codemirror"], mod);
   else // Plain browser env
     mod(CodeMirror);
 })(function(CodeMirror) {
@@ -19,13 +19,14 @@
 
   CodeMirror.defineMode("cypher", function(config) {
     var tokenBase = function(stream/*, state*/) {
+      curPunc = null
       var ch = stream.next();
       if (ch ==='"') {
-        stream.match(/.*?"/);
+        stream.match(/^[^"]*"/);
         return "string";
       }
       if (ch === "'") {
-        stream.match(/.*?'/);
+        stream.match(/^[^']*'/);
         return "string";
       }
       if (/[{}\(\),\.;\[\]]/.test(ch)) {

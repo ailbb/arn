@@ -1,11 +1,11 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: https://codemirror.net/LICENSE
+// Distributed under an MIT license: https://codemirror.net/5/LICENSE
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
-    mod(require("../../codemirror"));
+    mod(require("../../lib/codemirror"));
   else if (typeof define == "function" && define.amd) // AMD
-    define(["../../codemirror"], mod);
+    define(["../../lib/codemirror"], mod);
   else // Plain browser env
     mod(CodeMirror);
 })(function(CodeMirror) {
@@ -43,7 +43,7 @@ CodeMirror.defineMode("sieve", function(config) {
     if (ch == "(") {
       state._indent.push("(");
       // add virtual angel wings so that editor behaves...
-      // ...more sane incase of broken brackets
+      // ...more sane in case of broken brackets
       state._indent.push("{");
       return null;
     }

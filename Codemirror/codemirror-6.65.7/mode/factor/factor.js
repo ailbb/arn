@@ -1,5 +1,5 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: https://codemirror.net/LICENSE
+// Distributed under an MIT license: https://codemirror.net/5/LICENSE
 
 // Factor syntax highlight - simple mode
 //
@@ -7,16 +7,16 @@
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
-    mod(require("../../codemirror"), require("../../addon/mode/simple"));
+    mod(require("../../lib/codemirror"), require("../../addon/mode/simple"));
   else if (typeof define == "function" && define.amd) // AMD
-    define(["../../codemirror", "../../addon/mode/simple"], mod);
+    define(["../../lib/codemirror", "../../addon/mode/simple"], mod);
   else // Plain browser env
     mod(CodeMirror);
 })(function(CodeMirror) {
   "use strict";
 
   CodeMirror.defineSimpleMode("factor", {
-    // The start state contains the rules that are intially used
+    // The start state contains the rules that are initially used
     start: [
       // comments
       {regex: /#?!.*/, token: "comment"},
@@ -77,7 +77,7 @@
     // specific to simple modes.
     meta: {
       dontIndentStates: ["start", "vocabulary", "string", "string3", "stack"],
-      lineComment: [ "!", "#!" ]
+      lineComment: "!"
     }
   });
 

@@ -1,11 +1,11 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: https://codemirror.net/LICENSE
+// Distributed under an MIT license: https://codemirror.net/5/LICENSE
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
-    mod(require("../../codemirror"), require("../../mode/css/css"));
+    mod(require("../../lib/codemirror"), require("../../mode/css/css"));
   else if (typeof define == "function" && define.amd) // AMD
-    define(["../../codemirror", "../../mode/css/css"], mod);
+    define(["../../lib/codemirror", "../../mode/css/css"], mod);
   else // Plain browser env
     mod(CodeMirror);
 })(function(CodeMirror) {

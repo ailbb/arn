@@ -1,11 +1,11 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: https://codemirror.net/LICENSE
+// Distributed under an MIT license: https://codemirror.net/5/LICENSE
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
-    mod(require("../../codemirror"));
+    mod(require("../../lib/codemirror"));
   else if (typeof define == "function" && define.amd) // AMD
-    define(["../../codemirror"], mod);
+    define(["../../lib/codemirror"], mod);
   else // Plain browser env
     mod(CodeMirror);
 })(function(CodeMirror) {
@@ -31,7 +31,7 @@ CodeMirror.defineMode("sparql", function(config) {
                              "graph", "by", "asc", "desc", "as", "having", "undef", "values", "group",
                              "minus", "in", "not", "service", "silent", "using", "insert", "delete", "union",
                              "true", "false", "with",
-                             "data", "copy", "to", "move", "add", "create", "drop", "clear", "load"]);
+                             "data", "copy", "to", "move", "add", "create", "drop", "clear", "load", "into"]);
   var operatorChars = /[*+\-<>=&|\^\/!\?]/;
 
   function tokenBase(stream, state) {
@@ -61,11 +61,10 @@ CodeMirror.defineMode("sparql", function(config) {
       return "comment";
     }
     else if (operatorChars.test(ch)) {
-      stream.eatWhile(operatorChars);
       return "operator";
     }
     else if (ch == ":") {
-      stream.eatWhile(/[\w\d\._\-]/);
+      eatPnLocal(stream);
       return "atom";
     }
     else if (ch == "@") {
@@ -75,7 +74,7 @@ CodeMirror.defineMode("sparql", function(config) {
     else {
       stream.eatWhile(/[_\w\d]/);
       if (stream.eat(":")) {
-        stream.eatWhile(/[\w\d_\-]/);
+        eatPnLocal(stream);
         return "atom";
       }
       var word = stream.current();
@@ -86,6 +85,10 @@ CodeMirror.defineMode("sparql", function(config) {
       else
         return "variable";
     }
+  }
+
+  function eatPnLocal(stream) {
+    stream.match(/(\.(?=[\w_\-\\%])|[:\w_-]|\\[-\\_~.!$&'()*+,;=/?#@%]|%[a-f\d][a-f\d])+/i);
   }
 
   function tokenLiteral(quote) {

@@ -1,11 +1,11 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: https://codemirror.net/LICENSE
+// Distributed under an MIT license: https://codemirror.net/5/LICENSE
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
-    mod(require("../../codemirror"));
+    mod(require("../../lib/codemirror"));
   else if (typeof define == "function" && define.amd) // AMD
-    define(["../../codemirror"], mod);
+    define(["../../lib/codemirror"], mod);
   else // Plain browser env
     mod(CodeMirror);
 })(function(CodeMirror) {
@@ -24,9 +24,11 @@
     function getRange(allowFolded) {
       var range = finder(cm, pos);
       if (!range || range.to.line - range.from.line < minSize) return null;
+      if (force === "fold") return range;
+
       var marks = cm.findMarksAt(range.from);
       for (var i = 0; i < marks.length; ++i) {
-        if (marks[i].__isFold && force !== "fold") {
+        if (marks[i].__isFold) {
           if (!allowFolded) return null;
           range.cleared = true;
           marks[i].clear();
@@ -99,18 +101,18 @@
     cm.foldCode(cm.getCursor(), null, "fold");
   };
   CodeMirror.commands.unfold = function(cm) {
-    cm.foldCode(cm.getCursor(), null, "unfold");
+    cm.foldCode(cm.getCursor(), { scanUp: false }, "unfold");
   };
   CodeMirror.commands.foldAll = function(cm) {
     cm.operation(function() {
       for (var i = cm.firstLine(), e = cm.lastLine(); i <= e; i++)
-        cm.foldCode(CodeMirror.Pos(i, 0), null, "fold");
+        cm.foldCode(CodeMirror.Pos(i, 0), { scanUp: false }, "fold");
     });
   };
   CodeMirror.commands.unfoldAll = function(cm) {
     cm.operation(function() {
       for (var i = cm.firstLine(), e = cm.lastLine(); i <= e; i++)
-        cm.foldCode(CodeMirror.Pos(i, 0), null, "unfold");
+        cm.foldCode(CodeMirror.Pos(i, 0), { scanUp: false }, "unfold");
     });
   };
 

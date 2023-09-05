@@ -1,5 +1,5 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: https://codemirror.net/LICENSE
+// Distributed under an MIT license: https://codemirror.net/5/LICENSE
 
 /**
  * Author: Gautam Mehta
@@ -7,9 +7,9 @@
  */
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
-    mod(require("../../codemirror"));
+    mod(require("../../lib/codemirror"));
   else if (typeof define == "function" && define.amd) // AMD
-    define(["../../codemirror"], mod);
+    define(["../../lib/codemirror"], mod);
   else // Plain browser env
     mod(CodeMirror);
 })(function(CodeMirror) {
@@ -195,7 +195,7 @@ CodeMirror.defineMode("cobol", function () {
       case "string": // multi-line string parsing mode
         var next = false;
         while ((next = stream.next()) != null) {
-          if (next == "\"" || next == "\'") {
+          if ((next == "\"" || next == "\'") && !stream.match(/['"]/, false)) {
             state.mode = false;
             break;
           }

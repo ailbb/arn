@@ -1,13 +1,13 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: https://codemirror.net/LICENSE
+// Distributed under an MIT license: https://codemirror.net/5/LICENSE
 
 // Brainfuck mode created by Michael Kaminsky https://github.com/mkaminsky11
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object")
-    mod(require("../../codemirror"))
+    mod(require("../../lib/codemirror"))
   else if (typeof define == "function" && define.amd)
-    define(["../../codemirror"], mod)
+    define(["../../lib/codemirror"], mod)
   else
     mod(CodeMirror)
 })(function(CodeMirror) {

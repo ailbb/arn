@@ -10,7 +10,7 @@
 	<!--ExtJs适应mobile声明-->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<!--链接文件导航-->
-	<script data-main="/arn/nav" src="/arn/RequireJS/require-2.3/require.min.js"></script>
+	<script data-main="/arn/nav.min" src="/arn/RequireJS/require-2.3.6/require.min.js"></script>
 
 	<!--框架end-->
 
@@ -21,10 +21,6 @@
 	</style>
 	<!--框架配置start-->
 	<script>
-
-		var $AFPath =  window.$AFPath || ((r,p) => !r.exec(p) ? '' : p.substring(0, r.exec(p).index-1))
-		(/public|arn|views|module/, (document.currentScript || {}).src || location.href); // 前端模块的路径
-
 		/**
 		 * @type: // 请求配置（无配置默认请求所有库文件）
 		 * @动态库(reqLibraries)有：['jQuery', 'ext', 'd3', 'eCharts', 'highCharts']

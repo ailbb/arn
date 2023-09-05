@@ -1,11 +1,11 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: https://codemirror.net/LICENSE
+// Distributed under an MIT license: https://codemirror.net/5/LICENSE
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
-    mod(require("../../codemirror"), require("../xml/xml"), require("../javascript/javascript"))
+    mod(require("../../lib/codemirror"), require("../xml/xml"), require("../javascript/javascript"))
   else if (typeof define == "function" && define.amd) // AMD
-    define(["../../codemirror", "../xml/xml", "../javascript/javascript"], mod)
+    define(["../../lib/codemirror", "../xml/xml", "../javascript/javascript"], mod)
   else // Plain browser env
     mod(CodeMirror)
 })(function(CodeMirror) {
@@ -104,9 +104,9 @@
 
     function jsToken(stream, state, cx) {
       if (stream.peek() == "<" && jsMode.expressionAllowed(stream, cx.state)) {
-        jsMode.skipExpression(cx.state)
         state.context = new Context(CodeMirror.startState(xmlMode, jsMode.indent(cx.state, "", "")),
                                     xmlMode, 0, state.context)
+        jsMode.skipExpression(cx.state)
         return null
       }
 

@@ -4,22 +4,9 @@ define(['jQuery', 'vue', 'moment', 'eCharts', 'echartsPluginsArn'], function ($,
    var app = Vue.createApp({
       data: function () {
          return {
-            charts: [
-               { title: "组件图表", id: '1' },
-               { title: "组件图表", id: '2' },
-               { title: "组件图表", id: '3' },
-               { title: "组件图表", id: '4' },
-               { title: "组件图表", id: '5' },
-               { title: "组件图表", id: '6' },
-               { title: "组件图表", id: '7' },
-               { title: "组件图表", id: '8' },
-               { title: "组件图表", id: '9' },
-               { title: "组件图表", id: '10' },
-               { title: "组件图表", id: '11' },
-               { title: "组件图表", id: '12' },
-               { title: "组件图表", id: '13' },
-               { title: "组件图表", id: '14' }
-            ]
+            charts: Array.from({length: 30}, (v, k) => {
+               return { title: "组件图表", id: k };
+            })
          }
       },
       mounted() {
@@ -27,10 +14,30 @@ define(['jQuery', 'vue', 'moment', 'eCharts', 'echartsPluginsArn'], function ($,
       },
       methods: {
          drawCharts(chartObjs){
-            for(var key in chartObjs){
-               var list = []; for(var i=48;i--;) list.push({x: new Date((new Date().getTime() - i*60*60*1000)), y: Math.random()*100});
-               epa.drawLine("#chart-id-"+chartObjs[key].id, [list], null, 1, {}, false);
-            }
+            chartObjs.forEach(r=>{
+               let i = Math.round(Math.random()*5);
+
+               switch(i){
+                  case 0:
+                     epa.draw("#chart-id-"+r.id, epa.chartCommon.getDemoData(), null, 1, {}, false);
+                     break;
+                  case 1:
+                     epa.drawBar("#chart-id-"+r.id, epa.chartBar.getDemoData(), null, 1, {}, false);
+                     break;
+                  case 2:
+                     epa.drawLine("#chart-id-"+r.id, epa.chartLine.getDemoData(), null, 1, {}, false);
+                     break;
+                  case 3:
+                     epa.drawLineTotal("#chart-id-"+r.id, epa.chartLineTotal.getDemoData(), null, 1, {}, false);
+                     break;
+                  case 4:
+                     epa.drawPie("#chart-id-"+r.id, epa.chartPie.getDemoData(), null, 1, {}, false);
+                     break;
+                  case 5:
+                     epa.draw3dBar("#chart-id-"+r.id, epa.chart3dBar.getDemoData(), null, 1, {}, false);
+                     break;
+               }
+            });
          }
       }
    });

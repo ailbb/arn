@@ -1,5 +1,5 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: https://codemirror.net/LICENSE
+// Distributed under an MIT license: https://codemirror.net/5/LICENSE
 
 // Depends on htmlhint.js from http://htmlhint.com/js/htmlhint.js
 
@@ -7,9 +7,9 @@
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
-    mod(require("../../codemirror"), require("htmlhint"));
+    mod(require("../../lib/codemirror"), require("htmlhint"));
   else if (typeof define == "function" && define.amd) // AMD
-    define(["../../codemirror", "htmlhint"], mod);
+    define(["../../lib/codemirror", "htmlhint"], mod);
   else // Plain browser env
     mod(CodeMirror, window.HTMLHint);
 })(function(CodeMirror, HTMLHint) {

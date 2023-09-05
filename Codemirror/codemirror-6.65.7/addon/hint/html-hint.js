@@ -1,11 +1,11 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: https://codemirror.net/LICENSE
+// Distributed under an MIT license: https://codemirror.net/5/LICENSE
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
-    mod(require("../../codemirror"), require("./xml-hint"));
+    mod(require("../../lib/codemirror"), require("./xml-hint"));
   else if (typeof define == "function" && define.amd) // AMD
-    define(["../../codemirror", "./xml-hint"], mod);
+    define(["../../lib/codemirror", "./xml-hint"], mod);
   else // Plain browser env
     mod(CodeMirror);
 })(function(CodeMirror) {
@@ -98,6 +98,7 @@
     dfn: s,
     dir: s,
     div: s,
+    dialog: { attrs: { open: null } },
     dl: s,
     dt: s,
     em: s,

@@ -1,5 +1,5 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: https://codemirror.net/LICENSE
+// Distributed under an MIT license: https://codemirror.net/5/LICENSE
 
 // mode(s) for the sequence chart dsl's mscgen, xù and msgenny
 // For more information on mscgen, see the site of the original author:
@@ -11,9 +11,9 @@
 
 (function(mod) {
   if ( typeof exports == "object" && typeof module == "object")// CommonJS
-    mod(require("../../codemirror"));
+    mod(require("../../lib/codemirror"));
   else if ( typeof define == "function" && define.amd)// AMD
-    define(["../../codemirror"], mod);
+    define(["../../lib/codemirror"], mod);
   else// Plain browser env
     mod(CodeMirror);
 })(function(CodeMirror) {
@@ -72,11 +72,11 @@
   CodeMirror.defineMIME("text/x-msgenny", {name: "mscgen", language: "msgenny"});
 
   function wordRegexpBoundary(pWords) {
-    return new RegExp("\\b(" + pWords.join("|") + ")\\b", "i");
+    return new RegExp("^\\b(?:" + pWords.join("|") + ")\\b", "i");
   }
 
   function wordRegexp(pWords) {
-    return new RegExp("(" + pWords.join("|") + ")", "i");
+    return new RegExp("^(?:" + pWords.join("|") + ")", "i");
   }
 
   function startStateFn() {
@@ -153,7 +153,7 @@
         return "variable";
 
       /* attribute lists */
-      if (!pConfig.inAttributeList && !!pConfig.attributes && pStream.match(/\[/, true, true)) {
+      if (!pConfig.inAttributeList && !!pConfig.attributes && pStream.match('[', true, true)) {
         pConfig.inAttributeList = true;
         return "bracket";
       }
@@ -161,7 +161,7 @@
         if (pConfig.attributes !== null && pStream.match(wordRegexpBoundary(pConfig.attributes), true, true)) {
           return "attribute";
         }
-        if (pStream.match(/]/, true, true)) {
+        if (pStream.match(']', true, true)) {
           pConfig.inAttributeList = false;
           return "bracket";
         }

@@ -1,11 +1,11 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: https://codemirror.net/LICENSE
+// Distributed under an MIT license: https://codemirror.net/5/LICENSE
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
-    mod(require("../../codemirror"), require("../javascript/javascript"), require("../css/css"), require("../htmlmixed/htmlmixed"));
+    mod(require("../../lib/codemirror"), require("../javascript/javascript"), require("../css/css"), require("../htmlmixed/htmlmixed"));
   else if (typeof define == "function" && define.amd) // AMD
-    define(["../../codemirror", "../javascript/javascript", "../css/css", "../htmlmixed/htmlmixed"], mod);
+    define(["../../lib/codemirror", "../javascript/javascript", "../css/css", "../htmlmixed/htmlmixed"], mod);
   else // Plain browser env
     mod(CodeMirror);
 })(function(CodeMirror) {
@@ -261,7 +261,7 @@ CodeMirror.defineMode("pug", function (config) {
       }
       return 'variable';
     }
-    if (stream.match(/^\+#{/, false)) {
+    if (stream.match('+#{', false)) {
       stream.next();
       state.mixinCallAfter = true;
       return interpolation(stream, state);

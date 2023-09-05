@@ -1,13 +1,13 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: https://codemirror.net/LICENSE
+// Distributed under an MIT license: https://codemirror.net/5/LICENSE
 
 // Slim Highlighting for CodeMirror copyright (c) HicknHack Software Gmbh
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
-    mod(require("../../codemirror"), require("../htmlmixed/htmlmixed"), require("../ruby/ruby"));
+    mod(require("../../lib/codemirror"), require("../htmlmixed/htmlmixed"), require("../ruby/ruby"));
   else if (typeof define == "function" && define.amd) // AMD
-    define(["../../codemirror", "../htmlmixed/htmlmixed", "../ruby/ruby"], mod);
+    define(["../../lib/codemirror", "../htmlmixed/htmlmixed", "../ruby/ruby"], mod);
   else // Plain browser env
     mod(CodeMirror);
 })(function(CodeMirror) {

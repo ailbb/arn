@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ARN DEMO <bootstrap-3.0></title>
+
+	<!--框架start-->
+	<link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
+	<!--ExtJs适应mobile声明-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<!--bootstrap适应mobile声明-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!--链接文件导航-->
+	<script data-main="/arn/nav.min" src="/arn/RequireJS/require-2.3.6/require.min.js"></script>
+
+	<!--框架end-->
+
+	<!--框架配置start-->
+	<script>
+		/**
+		 * @type: // 请求配置（无配置默认请求所有库文件）
+		 * @动态库(reqLibraries)有：['jQuery', 'ext', 'd3', 'eCharts', 'highCharts']
+		 * @插件(reqPlugins)有：['bootstrap', 'extLocal', 'highCharts3d', 'jQuerySlide']
+		 *   requireConfig = {
+		 *      navScript: string,  // 动态库的nav文件
+		 *      libBaseURL: string, // 动态库根路径 （默认通过nav去寻找）
+		 *      reqLibraries: Array, // 需要请求的动态库
+		 *      reqPlugins: Array, // 需要请求的插件
+		 *      reqExtends: Array, // 需要请求的扩展内容
+		 *      version: {}, // 多个版本切换 （请保持目录结构一致）
+		 *		versionURL: win.versionURL, // 系统版本库地址
+		 *		useMask: boolean, // 是否启动时显示遮罩，默认为true
+		 *      style: { // ext多种样式切换
+		 *          extStyle || 'triton' // aria/classic/crisp/gray/neptune/triton
+		 *      },
+		 *      loadInit: function (lib){}, // 初始化方法
+		 *      defaultLoadInit: function (lib){} // 覆盖默认初始化方法
+		 *   }
+		 **/
+		var arnCfg = {
+			useMask: true,
+			mask: { maskCls: 'load6', maskLdColorTheme: '#3c8dbc'},
+			reqLibraries: [
+				'requireCss', 'jQuery', 'vue',
+				'test-vue2-elementui.js'
+			],
+			reqPlugins: [],
+			version: {
+				vue: '2.6.10'
+			}
+		};
+	</script>
+
+	<!--框架配置end-->
+
+</head>
+<body>
+</body>
+</html>
