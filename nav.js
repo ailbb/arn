@@ -133,7 +133,7 @@
                     bootstrapIcons: ['/arn/Bootstrap-icons/'],
                     mdbUiKit: ['/arn/mdbUiKit/mdbuikit-'],
                     fontAwesome: ['/arn/FontAwesome/font-awesome-'],
-                    echartsPluginsArn: ['/arn/echartsPluginsArn/echarts-plugins-arn-']
+                    echartsPluginsArn: ['/arn/EchartsPluginsArn/echarts-plugins-arn-']
                 }
             },
             style: {
