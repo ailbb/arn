@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+	<body>
+
+		<!--声明-->
+		<!--ExtJs适应mobile声明-->
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<!--END-->
+
+		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+		<!--Bootstrap-UI框架-->
+		<link href="https://cdn.bootcdn.net/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css" rel="stylesheet">
+		<script src="https://cdn.bootcdn.net/ajax/libs/bootstrap/5.3.1/js/bootstrap.min.js"></script>
+
+		<!--vue-框架-->
+		<script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.min.js"></script>
+		<!--END-->
+
+		<!--Moment-框架-->
+		<script src="https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+		<!--END-->
+
+		<div id="vue3" style="width:auto;height:auto;">
+
+			<div class="accordion" id="accordion-level1">
+				<div class="accordion-item" v-for="(level1,level1_index) in trs">
+					<h2 class="accordion-header">
+						<button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="'#collapse-level1-'+level1_index" aria-expanded="true" aria-controls="collapseOne">
+							{{ level1.title }}
+						</button>
+					</h2>
+					<div :id="'collapse-level1-'+level1_index" class="accordion-collapse collapse" data-bs-parent="#accordion-level1" >
+						<div class="accordion-body">
+							<table class="table table-sm table-dark table-striped" v-if="!level1.childs || !level1.childs.length">
+								<tbody>
+								<tr v-for="text in level1.text">
+									<td>{{text}}</td>
+								</tr>
+								</tbody>
+							</table>
+
+							<div class="accordion" id="accordion-level2">
+								<div class="accordion-item" v-for="(level2,level2_index) in level1.childs" v-if="level1.childs && level1.childs.length">
+									<h2 class="accordion-header">
+										<button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="'#collapse-level2-'+level2_index" aria-expanded="true" aria-controls="collapseOne">
+											{{ level2.title }}
+										</button>
+									</h2>
+									<div :id="'collapse-level2-'+level2_index" class="accordion-collapse collapse" data-bs-parent="#accordion-level2" >
+										<div class="accordion-body">
+											<table class="table table-sm table-dark table-striped" v-if="!level2.childs || !level2.childs.length">
+												<tbody>
+												<tr v-for="text in level2.text">
+													<td>{{text}}</td>
+												</tr>
+												</tbody>
+											</table>
+
+											<div class="accordion" id="accordion-level3">
+												<div class="accordion-item" v-for="(level3,level3_index) in level2.childs" v-if="level2.childs && level2.childs.length">
+													<h2 class="accordion-header">
+														<button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="'#collapse-level3-'+level3_index" aria-expanded="true" aria-controls="collapseOne">
+															{{ level3.title }}
+														</button>
+													</h2>
+													<div :id="'collapse-level3-'+level3_index" class="accordion-collapse collapse show" data-bs-parent="#accordion-level3" >
+														<div class="accordion-body">
+															<table class="table table-sm table-dark table-striped" v-if="!level3.childs || !level3.childs.length">
+																<tbody>
+																<tr v-for="text in level3.text">
+																	<td>{{text}}</td>
+																</tr>
+																</tbody>
+															</table>
+
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			var app = Vue.createApp({
+				data: function () {
+					return {
+						trs: []
+					}
+				},
+				mounted() {
+					let _this = this;
+					$.get("hosts", function(data){
+						_this.doData1(data);
+					});
+				},
+				watch: {},
+				methods: {
+					doData1(data) {
+						let ds = data.split(/((\r\n)|(\n)){2,}/); // 将多行空格切开
+						this.doData2(ds);
+					},
+					doData2(data){
+						let _this = this;
+						let rs = [], i=0;
+
+						// # 一级
+						// ## 二级
+						// # >> 三级
+
+
+						data.forEach(textarea=>{
+							let list = [];
+							let r = { title:"", text:[], childs: [] };
+
+							if(!textarea || !textarea.replace(/(\r\n)|(\n)/g,"")) return;
+
+							if(textarea.indexOf("##") != -1) { // 二级结构
+								list = rs[rs.length-1].childs;
+							} else if(textarea.indexOf("# >>") != -1) { // 三级结构
+								list = rs[rs.length-1].childs[rs[rs.length-1].childs.length-1].childs;
+							} else if(textarea.indexOf("#") != -1) { // 一级结构
+								list = rs;
+							}
+
+							list.push(_this.doData3(textarea, r)); // 如果不存在，则新增
+						});
+
+						_this.trs = rs;
+					},
+					doData3(data, rs){
+						let _this = this;
+
+						data.split(/(\r\n)|\n/).forEach(line=>{
+							if(line.indexOf("##") != -1) { // 二级结构
+								rs.title = line;
+							} else if(line.indexOf("# >>") != -1) { // 三级结构
+								if(rs.title) {
+									rs.childs.push(_this.doData3(data.replace(rs.title,""), { title:"", text:[], childs: [] }))
+									return rs;
+								} else rs.title = line;
+							} else if(line.indexOf("#") != -1 && !rs.title) { // 一级结构
+								rs.title = line;
+							} else if(line.replace(/(\s+)|#/g,"")){
+								rs.text.push(line);
+							}
+						})
+
+						return rs;
+					}
+				}
+			});
+			app.mount('#vue3');
+
+		</script>
+	</body>
+</html>
