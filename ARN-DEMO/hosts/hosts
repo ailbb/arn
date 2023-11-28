@@ -1,0 +1,136 @@
+# Copyright (c) 1993-2009 Microsoft Corp.
+#
+# This is a sample HOSTS file used by Microsoft TCP/IP for Windows.
+#
+# This file contains the mappings of IP addresses to host names. Each
+# entry should be kept on an individual line. The IP address should
+# be placed in the first column followed by the corresponding host name.
+# The IP address and the host name should be separated by at least one
+# space.
+#
+# Additionally, comments (such as these) may be inserted on individual
+# lines or following the machine name denoted by a '#' symbol.
+#
+# For example:
+#
+#      102.54.94.97     rhino.acme.com          # source server
+#       38.25.63.10     x.acme.com              # x client host
+
+# localhost name resolution is handled within DNS itself.
+#	127.0.0.1       localhost
+#	::1             localhost
+
+# 禁用Axure
+# 127.0.0.1 www.axure.com 
+127.0.0.1 apps.corel.com
+127.0.0.1 origin-mc.corel.com
+127.0.0.1 iws.corel.com
+127.0.0.1 mc.corel.com
+
+# 禁用aTrustAgent
+127.0.0.1	localhost.sangfor.com.cn
+
+# ==== AILBB资源服务 ===
+# 192.168.33.3 redis.ailbb.com kafka.ailbb.com zookeeper.ailbb.com
+# 127.0.0.1 server.ailbb.com 
+# 127.0.0.1 mysql.ailbb.com
+# 127.0.0.1 vpn.ailbb.com
+
+# ==== 资源池资源服务 ===
+
+## 资源池云服务器地址表
+192.168.4.21 windows.ailbb.com wdnode-421
+
+
+## 1-云计算(Openstack集群)
+192.168.5.171 opnode-5171
+192.168.5.129 opnode-5129
+
+
+## 1-云计算(VMWare集群)
+192.168.5.170 vmnode-5170
+192.168.5.172 vmnode-5172
+192.168.6.164 vmnode-6164
+192.168.254.166 vmnode-254166
+
+
+## 2-容器云(Kubernets集群)
+192.168.7.246 k8snode-7246
+192.168.7.248 k8snode-7248
+192.168.7.235 k8snode-7235
+192.168.7.234 k8snode-7234
+192.168.7.237 k8snode-7237
+192.168.7.232 k8snode-7232
+192.168.7.244 k8snode-7244
+192.168.7.233 k8snode-7233
+192.168.7.238 k8snode-7238
+192.168.7.211 k8snode-7211
+192.168.7.212 k8snode-7212
+192.168.7.245 k8snode-7245
+192.168.7.249 k8snode-7249
+
+
+## 4-云存储(Ceph集群)
+127.0.0.1 ceph.ailbb.com.cn
+
+
+## 5-数据库(服务集群)
+# >> MySQL业务数据库[jdbc:mysql://192.168.7.254:3306/udo]
+192.168.7.254 mysql.ailbb.com.cn
+
+# >> Kafka消息队列[192.168.7.238:9092]
+192.168.7.238 kafka.ailbb.com.cn
+
+# >> Zookeeper协调器[192.168.7.238:2181]
+192.168.7.238 zookeeper.ailbb.com.cn
+
+# >> Redis缓存数据库[192.168.5.153:6379]
+192.168.5.153 redis.ailbb.com.cn
+
+
+## 6-仓库(服务集群)
+# >> YUM仓库[http://192.168.6.121/epel/$releasever/$basearch]
+192.168.6.121 mirrors.ailbb.com.cn
+
+# >> 代码仓库(Git)[http://192.168.254.249:50003/]
+192.168.254.249 git.ailbb.com.cn
+
+# >> 代码仓库(SVN)[svn://svn.ailbb.com.cn/]
+192.168.6.200 svn.ailbb.com.cn
+
+# >> 软件仓库[http://192.168.4.21:8080/soft-center]
+192.168.4.21 soft.ailbb.com.cn
+
+# >> Maven仓库
+127.0.0.1 maven.ailbb.com.cn
+
+# >> Docker镜像仓库(Harbor)[http://192.168.254.151:8021/]
+192.168.254.151 hub.ailbb.com.cn
+
+# >> 静态资源库(CDN)[svn://svn.ailbb.com.cn/]
+219.151.137.59 cdn.ailbb.com.cn
+
+
+
+## 10-大数据(Hadoop集群)
+192.168.7.236 hadoop-7236
+192.168.7.254 hadoop-7254
+192.168.7.240 hadoop-7240
+192.168.7.241 hadoop-7241
+192.168.7.242 hadoop-7242
+
+
+
+## 资源池本地开发服务
+127.0.0.1 sharepro.ailbb.com
+127.0.0.1 lin6.ailbb.com
+
+## 资源池现网隧道服务
+# 127.0.0.1 mysql.ailbb.com
+# 127.0.0.1 kafka.ailbb.com
+# 127.0.0.1 zookeeper.ailbb.com
+
+## 灾普应急项目
+# 59.255.61.27 fxpc.mem.cegn.cn
+
+# ==== 资源池资源服务 END ===
