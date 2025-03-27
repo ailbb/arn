@@ -192,7 +192,7 @@ Ext.define('ExPlugins.textwindow.TextWindow', {
                     Ext.create('Ext.window.Window', {
                         width: 800,
                         height: 500,
-                        title: '微编辑器帮助文档',
+                        title: '微编辑器文档',
                         html: '<pre>' +
                             'Ctrl+backspace：强制删除内容；\r\n' +
                             'ESC：退出Windows窗口；\r\n' +
