@@ -1,6 +1,7 @@
 /**
- * Created by Wz on 2017/6/26.
+ * Created by Wz on 2026/5/15.
  */
+if(!window.define) window.define = function(args, fn){ fn(...(args.map(ag=>eval(ag)))) }
 define(['jQuery'], function ($) {
 
     /**
