@@ -1,0 +1,37 @@
+/**
+ * Win10 风格四格拼图 loader
+ * 由 mask.js 在 .loader 内注入 4 个 <i> 子元素，本文件只定义布局和动画
+ * 配色由 mask.js 注入的内联 style 决定（主色/辅色对角分布）
+ */
+.arn .loader {
+    position: relative;
+    width: 56px;
+    height: 56px;
+    margin: 80px auto;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+.arn .loader > i {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+    opacity: 0.3;
+    -webkit-animation: arn-pop 1.6s infinite ease-in-out;
+    animation: arn-pop 1.6s infinite ease-in-out;
+}
+.arn .loader > i:nth-child(1) { top: 0;    left: 0;   animation-delay: 0s; }
+.arn .loader > i:nth-child(2) { top: 0;    right: 0;  animation-delay: 0.2s; }
+.arn .loader > i:nth-child(3) { bottom: 0; right: 0;  animation-delay: 0.4s; }
+.arn .loader > i:nth-child(4) { bottom: 0; left: 0;   animation-delay: 0.6s; }
+
+@-webkit-keyframes arn-pop {
+    0%, 70%, 100% { -webkit-transform: scale(0);   opacity: 0.3; }
+    35%           { -webkit-transform: scale(1);   opacity: 1; }
+}
+@keyframes arn-pop {
+    0%, 70%, 100% { transform: scale(0);   opacity: 0.3; }
+    35%           { transform: scale(1);   opacity: 1; }
+}

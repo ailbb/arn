@@ -12,56 +12,82 @@
         maskType: 'css', // css和gif两种方式
         maskLoading: false,
         autoClose: false,
-        maskCls: 'load1',
-        // maskBgColorTheme: '#0dc5c1', // 默认加载背景颜色
-        // maskLdColorTheme: '#FFFFFF', // 默认加载前面logo颜色
+        maskCls: 'arn',
+        // 主题色系：深蓝 rgb(30,96,145) + 黄绿 rgb(167,200,68)
         maskBgColorTheme: '#ffffff00',
-        maskLdColorTheme: 'rgb(221 75 57)',
+        maskLdColorTheme: 'rgb(30, 96, 145)',     // 主色 - 深蓝
+        maskLdColorTheme2: 'rgb(167, 200, 68)',   // 辅助色 - 黄绿
+        maskFadeTimeOut: 240,                      // 淡出时长 ms
+        maskMinDisplayTime: 200,                   // 最短显示时间，避免短任务闪烁
+        _maskShownAt: 0,
         onResize: function (){ arnMask.maskType == "css" ? arnMask.css.onResize() : arnMask.gif.onResize(); },
         loadMask: function (option){ arnMask.maskType == "css" ? arnMask.css.loadMask(option) : arnMask.gif.loadMask(option); return this; },
         unMask: function (){ arnMask.maskType == "css" ? arnMask.css.unMask() : arnMask.gif.unMask(); return (window.onresize = null, this); },
         getMaskElement: function (){ return document.querySelector('.arn-loader'); },
         getBaseUrl: function(){ return currentPath; },
         getCls: function (maskCls, maskLdColorTheme){
-            if(maskCls == 'load1') return `<style>
-                .${maskCls} .loader, .${maskCls} .loader:before, .${maskCls} .loader:after{
-                    background: ${maskLdColorTheme}!important;
-                }
-
-                .loader:after{
-                    background: ${maskLdColorTheme}!important;
-                }
-            </style>`;
-
+            if(maskCls == 'arn') {
+                var c2 = arnMask.maskLdColorTheme2 || maskLdColorTheme;
+                return `<style>
+                .${maskCls} .loader > i:nth-child(1),
+                .${maskCls} .loader > i:nth-child(3){ background: ${maskLdColorTheme}; }
+                .${maskCls} .loader > i:nth-child(2),
+                .${maskCls} .loader > i:nth-child(4){ background: ${c2}; }
+                </style>`;
+            }
+            if(maskCls == 'load1') {
+                var c2 = arnMask.maskLdColorTheme2 || maskLdColorTheme;
+                return `<style>
+                .${maskCls} .loader, .${maskCls} .loader:after{ background: ${maskLdColorTheme}!important; }
+                .${maskCls} .loader:before{ background: ${c2}!important; }
+                </style>`;
+            }
             return '';
         },
+        // 返回 loader 内部子元素 HTML（arn 需要 4 个 <i>；其他 loader 留空，靠伪元素）
+        getLoaderInnerHTML: function (maskCls){
+            if(maskCls == 'arn') return '<i></i><i></i><i></i><i></i>';
+            return '';
+        },
+        // 用 CSS transition 替代 setInterval，GPU 加速更顺滑、更短
         fadeOut: function (maskElement, t){
-
+            if(arnMask._maskFading) return;
             if(typeof maskElement == 'number') t = maskElement;
-
             if(!maskElement || t == maskElement) maskElement = this.getMaskElement();
-
             if(!maskElement) return ;
 
-            var i = 1, domMaskCheck = setInterval(function (){
-                if(document.readyState != "complete") return ;
+            // 最短显示时间保护：避免极短任务造成的闪现
+            var elapsed = Date.now() - (arnMask._maskShownAt || 0);
+            var minTime = arnMask.maskMinDisplayTime || 0;
+            if(elapsed < minTime) {
+                setTimeout(function(){ arnMask.fadeOut(maskElement, t); }, minTime - elapsed);
+                return;
+            }
 
-                if((i -= 0.1) <= 0) {
-                    window.clearInterval(domMaskCheck);
-                    maskElement.remove();
-                    arnMask.maskLoading = false;
-                }
-                maskElement.style.opacity = i;
-            },t ? t/10 : 30);
+            arnMask._maskFading = true;
+            var duration = t || arnMask.maskFadeTimeOut || 240;
+            // 一次性 transition，结束就移除 DOM
+            maskElement.style.transition = 'opacity ' + duration + 'ms cubic-bezier(0.22, 0.61, 0.36, 1)';
+            void maskElement.offsetWidth; // 强制 reflow，确保 transition 生效
+            maskElement.style.opacity = '0';
+
+            setTimeout(function (){
+                if(maskElement.parentNode) maskElement.remove();
+                arnMask.maskLoading = false;
+                arnMask._maskFading = false;
+            }, duration);
         },
         domIsReady: () => document.readyState == "complete",
         checkNav: function (){
-            window.addEventListener('load', function (){
+            // window load 后兜底检查，800ms 内 arn.nav 没起来就主动撤掉遮罩
+            // （FrameHeader 路径下会在 Vue 挂载后主动 unMask，正常不会走到这里）
+            var fire = function (){
                 setTimeout(function (){
-                    // 延迟1500s检查arn.nav框架是否正常加载，不正常加载则自动取消遮罩
-                    if(!arn.nav || Object.keys(arn.nav).length == 0) arnMask.unMask();
-                }, 1500);
-            });
+                    if(arnMask.maskLoading && (!arn.nav || Object.keys(arn.nav).length == 0)) arnMask.unMask();
+                }, 800);
+            };
+            if(document.readyState == 'complete') fire();
+            else window.addEventListener('load', fire);
         },
         css: {
             onResize: function (option){
@@ -89,7 +115,7 @@
                 var head = document.getElementsByTagName('head')[0],
                     linkHref = `${option.getBaseUrl()}/css-loading/${option.maskCls}.css`,
                     linkElement = `<link href="${linkHref}" rel=stylesheet type="text/css" />`,
-                    maskElement = `<div id="loading-Boxer-Unity" class="${option.maskCls} arn-loader"><div class="loader" ></div></div>`,
+                    maskElement = `<div id="loading-Boxer-Unity" class="${option.maskCls} arn-loader"><div class="loader">${arnMask.getLoaderInnerHTML(option.maskCls)}</div></div>`,
                     styleElement = arnMask.getCls(option.maskCls, option.maskLdColorTheme),
                     _this = this
                 ;
@@ -104,13 +130,31 @@
 
                     var maskChildEl = document.createElement('div');
                     maskChildEl.className = "loader";
+                    if(option.maskCls == "arn") {
+                        // Win10 风格：loader 内塞 4 个 <i>，布局和动画交给 arn.css
+                        for(var k = 0; k < 4; k++) maskChildEl.appendChild(document.createElement('i'));
+                    }
                     // maskChildEl.style.color = option.maskLdColorTheme;
                     // 解决遮罩动画缺少伪元素下半截的问题
                     var styleEl = document.createElement('style');
-                    if(option.maskCls == "load1"){
-                        styleEl.textContent = ` 
-                             .${option.maskCls} .loader, .${option.maskCls} .loader:before, .${option.maskCls} .loader:after{background: ${option.maskLdColorTheme}!important;}
+                    if(option.maskCls == "arn"){
+                        // 对角线同色：1/3 主色，2/4 辅色，符合 Win10 logo 视觉
+                        var _c2w = option.maskLdColorTheme2 || option.maskLdColorTheme;
+                        styleEl.textContent = `
+                             .${option.maskCls}{will-change:opacity;}
+                             .${option.maskCls} .loader > i:nth-child(1),
+                             .${option.maskCls} .loader > i:nth-child(3){ background: ${option.maskLdColorTheme}; }
+                             .${option.maskCls} .loader > i:nth-child(2),
+                             .${option.maskCls} .loader > i:nth-child(4){ background: ${_c2w}; }
+                        `;
+                    }else if(option.maskCls == "load1"){
+                        // 三段跳动块采用 蓝-绿-蓝 渐变：中间 loader 主色、左伪元素辅色、右伪元素主色
+                        var _c2 = option.maskLdColorTheme2 || option.maskLdColorTheme;
+                        styleEl.textContent = `
+                             .${option.maskCls} .loader, .${option.maskCls} .loader:after{background: ${option.maskLdColorTheme}!important;}
+                             .${option.maskCls} .loader:before{background: ${_c2}!important;}
                              .${option.maskCls} .loader{color:${option.maskLdColorTheme}!important;}
+                             .${option.maskCls}{will-change:opacity;}
                         `;
                     }else if(option.maskCls == "load2"){
                         styleEl.textContent = `
@@ -138,6 +182,8 @@
                     maskEl.appendChild(maskChildEl);
                     head.appendChild(styleEl);
                     document.body.appendChild(maskEl);
+                    // if 分支也注册兜底，防止外部忘了调用 unMask 导致 mask 卡死
+                    arnMask.checkNav();
                 } else {
                     document.write(linkElement);
                     document.write(styleElement);
@@ -150,6 +196,7 @@
 
                 _this.onResize(option);
 
+                arnMask._maskShownAt = Date.now();
                 arnMask.maskLoading = true;
             },
             unMask: function (){
@@ -157,11 +204,10 @@
 
                 var maskElement = document.querySelector('.arn-loader');
 
-                if(maskElement) maskElement.remove();
+                // 走 fadeOut 让关闭也有自然过渡，而不是瞬间消失
+                if(maskElement) arnMask.fadeOut(maskElement);
 
                 window.onresize = null;
-
-                arnMask.maskLoading = false;
             }
         },
         gif: {
